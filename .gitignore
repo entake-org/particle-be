@@ -1,0 +1,6 @@
+.settings/
+.idea/
+wily-dependencies.iml
+/target/
+.project
+.classpath

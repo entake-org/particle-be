@@ -1,0 +1,246 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>io.sdsolutions.particle</groupId>
+    <artifactId>dependencies</artifactId>
+    <version>2.5.6</version>
+    <packaging>pom</packaging>
+
+    <name>particle-dependencies</name>
+	<description>Parent Dependency POM that extends Spring Boot for the Particle Framework.</description>
+	<url>https://github.com/sdsolutionsio/particle-dependencies</url>
+
+	<licenses>
+		<license>
+		  <name>The Apache Software License, Version 2.0</name>
+		  <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+            <name>Nick DiMola</name>
+            <email>nick@sdsolutions.io</email>
+            <organization>SD Solutions LLC</organization>
+            <organizationUrl>https://www.sdsolutions.io</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:https://github.com/sdsolutionsio/particle-dependencies.git</connection>
+		<developerConnection>scm:git:ssh://github.com:sdsolutionsio/particle-dependencies.git</developerConnection>
+		<url>https://github.com/sdsolutionsio/particle-dependencies/tree/master</url>
+	</scm>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>17</java.version>
+
+        <!-- Spring Boot Version -->
+        <spring-boot.version>2.5.6</spring-boot.version>
+
+        <!-- Managed Dependency Versions -->
+        <spring-cloud.version>2020.0.4</spring-cloud.version>
+        <mongo-db-version>3.12.10</mongo-db-version>
+        <javax.jms.version>2.0.1</javax.jms.version>
+        <swagger.version>3.0.0</swagger.version>
+        <micrometer-registry-prometheus.version>1.7.5</micrometer-registry-prometheus.version>
+        <prometheus.version>0.12.0</prometheus.version>
+        <nimbus-jose-jwt.version>9.15.2</nimbus-jose-jwt.version>
+        <smartystreets.version>3.12.2</smartystreets.version>
+        <dynamodb.version>1.12.105</dynamodb.version>
+        <apache-poi.version>5.1.0</apache-poi.version>
+        <okta.version>2.1.2</okta.version>
+        <jooq.version>3.15.4</jooq.version>
+        <commons-fileupload-version>1.4</commons-fileupload-version>
+        <dozer-version>6.5.2</dozer-version>
+        <ehcache-version>3.9.7</ehcache-version>
+        <commons-lang3-version>3.12.0</commons-lang3-version>
+        <commons-io-version>2.11.0</commons-io-version>
+        <connector-api-version>1.5</connector-api-version>
+        <logstash-logback-version>6.6</logstash-logback-version>
+        <hamcrest-all-version>1.3</hamcrest-all-version>
+
+        <!-- Spring Override Versions -->
+        <validation-api-version>1.1.0.Final</validation-api-version>
+    </properties>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.5.6</version>
+    </parent>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>mongo-java-driver</artifactId>
+                <version>${mongo-db-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.jms</groupId>
+                <artifactId>javax.jms-api</artifactId>
+                <version>${javax.jms.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.springfox</groupId>
+                <artifactId>springfox-boot-starter</artifactId>
+                <version>${swagger.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-registry-prometheus</artifactId>
+                <version>${micrometer-registry-prometheus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.prometheus</groupId>
+                <artifactId>simpleclient</artifactId>
+                <version>${prometheus.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.nimbusds</groupId>
+                <artifactId>nimbus-jose-jwt</artifactId>
+                <version>${nimbus-jose-jwt.version}</version>
+            </dependency>
+
+			<dependency>
+				<groupId>com.smartystreets.api</groupId>
+				<artifactId>smartystreets-java-sdk</artifactId>
+				<version>${smartystreets.version}</version>
+			</dependency>
+
+            <dependency>
+                <groupId>com.amazonaws</groupId>
+                <artifactId>aws-java-sdk-dynamodb</artifactId>
+                <version>${dynamodb.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${apache-poi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${apache-poi.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.okta.spring</groupId>
+                <artifactId>okta-spring-boot-starter</artifactId>
+                <version>${okta.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq</artifactId>
+                <version>${jooq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>${commons-fileupload-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons-io-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.dozermapper</groupId>
+                <artifactId>dozer-core</artifactId>
+                <version>${dozer-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.ehcache</groupId>
+                <artifactId>ehcache</artifactId>
+                <version>${ehcache-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-lang3</artifactId>
+                <version>${commons-lang3-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax.resource</groupId>
+                <artifactId>connector-api</artifactId>
+                <version>${connector-api-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>net.logstash.logback</groupId>
+                <artifactId>logstash-logback-encoder</artifactId>
+                <version>${logstash-logback-version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hamcrest</groupId>
+                <artifactId>hamcrest-all</artifactId>
+                <version>${hamcrest-all-version}</version>
+            </dependency>
+
+        </dependencies>
+    </dependencyManagement>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.7</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>false</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+	
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
+</project>
