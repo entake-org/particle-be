@@ -30,7 +30,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public Docket wilyApi() {
+    public Docket particleApi() {
         String applicationName = environment.getProperty("app.description");
         applicationName = applicationName != null ? applicationName : "Application API";
 
