@@ -37,12 +37,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
 
-        <particle-core-version>2.5.6</particle-core-version>
-        <particle-exceptions-version>2.5.6</particle-exceptions-version>
         <particle-audit-version>2.5.6</particle-audit-version>
-        <particle-security-version>2.5.6</particle-security-version>
-        <particle-database-version>2.5.6</particle-database-version>
         <particle-aws-version>2.5.6</particle-aws-version>
+        <particle-core-version>2.5.6</particle-core-version>
+        <particle-database-version>2.5.6</particle-database-version>
+        <particle-exceptions-version>2.5.6</particle-exceptions-version>
+        <particle-security-version>2.5.6</particle-security-version>
         <particle-smartystreets-version>2.5.6</particle-smartystreets-version>
     </properties>
 

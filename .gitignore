@@ -1,6 +1,6 @@
 .settings/
 .idea/
-wily.iml
+*.iml
 /target/
 .classpath
 .project
