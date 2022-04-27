@@ -4,7 +4,7 @@
 
     <groupId>io.sdsolutions.particle</groupId>
     <artifactId>dependencies</artifactId>
-    <version>2.5.6</version>
+    <version>2.6.7</version>
     <packaging>pom</packaging>
 
     <name>particle-dependencies</name>
@@ -38,7 +38,7 @@
         <java.version>17</java.version>
 
         <!-- Spring Boot Version -->
-        <spring-boot.version>2.5.6</spring-boot.version>
+        <spring-boot.version>2.6.7</spring-boot.version>
 
         <!-- Managed Dependency Versions -->
         <spring-cloud.version>2020.0.4</spring-cloud.version>
@@ -69,7 +69,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.6</version>
+        <version>2.6.7</version>
     </parent>
 
     <dependencyManagement>
@@ -199,7 +199,6 @@
                 <artifactId>hamcrest-all</artifactId>
                 <version>${hamcrest-all-version}</version>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
