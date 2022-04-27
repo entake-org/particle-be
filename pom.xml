@@ -4,7 +4,7 @@
 
     <groupId>io.sdsolutions.particle</groupId>
     <artifactId>parent</artifactId>
-    <version>2.5.6</version>
+    <version>2.6.7</version>
     <packaging>pom</packaging>
 
     <name>particle-parent</name>
@@ -37,19 +37,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>17</java.version>
 
-        <particle-audit-version>2.5.6</particle-audit-version>
-        <particle-aws-version>2.5.6</particle-aws-version>
-        <particle-core-version>2.5.6</particle-core-version>
-        <particle-database-version>2.5.6</particle-database-version>
-        <particle-exceptions-version>2.5.6</particle-exceptions-version>
-        <particle-security-version>2.5.6</particle-security-version>
-        <particle-smartystreets-version>2.5.6</particle-smartystreets-version>
+        <particle-audit-version>2.6.7</particle-audit-version>
+        <particle-aws-version>2.6.7</particle-aws-version>
+        <particle-core-version>2.6.7</particle-core-version>
+        <particle-database-version>2.6.7</particle-database-version>
+        <particle-exceptions-version>2.6.7</particle-exceptions-version>
+        <particle-security-version>2.6.7</particle-security-version>
+        <particle-smartystreets-version>2.6.7</particle-smartystreets-version>
     </properties>
 
     <parent>
         <groupId>io.sdsolutions.particle</groupId>
         <artifactId>dependencies</artifactId>
-        <version>2.5.6</version>
+        <version>2.6.7</version>
     </parent>
 
     <dependencyManagement>
