@@ -4,7 +4,7 @@
 
     <groupId>io.sdsolutions.particle</groupId>
     <artifactId>dependencies</artifactId>
-    <version>2.6.7</version>
+    <version>2.6.8</version>
     <packaging>pom</packaging>
 
     <name>particle-dependencies</name>
@@ -205,6 +205,7 @@
 	<build>
 		<plugins>
 			<plugin>
+                <inherited>false</inherited>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
 				<version>1.5</version>
@@ -219,6 +220,7 @@
 				</executions>
 			</plugin>
             <plugin>
+                <inherited>false</inherited>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
                 <version>1.6.13</version>
