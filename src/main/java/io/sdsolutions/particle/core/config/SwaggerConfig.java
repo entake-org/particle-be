@@ -19,8 +19,8 @@ import java.util.Date;
  * This represents a basic Swagger configuration for all of your endpoints. Simply having this jar on your classpath
  * will automagically create your Swagger documentation and post it at /swagger-ui/index.html, when the app is up and running.
  */
-@Configuration
-@EnableWebMvc
+// @Configuration
+// @EnableWebMvc
 public class SwaggerConfig implements WebMvcConfigurer {
 
     private Environment environment;
@@ -29,7 +29,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
         this.environment = environment;
     }
 
-    @Bean
+    // @Bean
     public Docket particleApi() {
         String applicationName = environment.getProperty("app.description");
         applicationName = applicationName != null ? applicationName : "Application API";
@@ -48,7 +48,7 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .tags(new Tag(applicationName, "All APIs provided by this implementation."));
     }
 
-    @Bean
+    // @Bean
     public UiConfiguration uiConfig() {
         return UiConfigurationBuilder.builder()
                 .deepLinking(true)
