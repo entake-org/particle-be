@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-public class CognitoAutoLoginFilter extends AutoLoginFilter {
-    private static final Logger LOGGER = LoggerFactory.getLogger(CognitoAutoLoginFilter.class);
+public class OAuth2AutoLoginFilter extends AutoLoginFilter {
+    private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2AutoLoginFilter.class);
 
     private static final String DUMMY_USER = "user";
     private static final String DUMMY_PASSWORD = "password";
@@ -39,7 +39,7 @@ public class CognitoAutoLoginFilter extends AutoLoginFilter {
         return DUMMY_PASSWORD;
     }
 
-    public CognitoAutoLoginFilter(AuthenticationManager authenticationManager, ConfigurableJWTProcessor configurableJWTProcessor, Environment environment) {
+    public OAuth2AutoLoginFilter(AuthenticationManager authenticationManager, ConfigurableJWTProcessor configurableJWTProcessor, Environment environment) {
         super.setAuthenticationManager(authenticationManager);
         this.configurableJWTProcessor = configurableJWTProcessor;
         this.environment = environment;
@@ -71,21 +71,20 @@ public class CognitoAutoLoginFilter extends AutoLoginFilter {
         }
 
         if (!isIssuedCorrectly(claimsSet)) {
-            throw new IOException(String.format("Issuer %s in JWT token doesn't match cognito idp %s", claimsSet.getIssuer(), environment.getRequiredProperty("security.cognito.userpool")));
+            throw new IOException(String.format("Issuer (%s) in JWT token doesn't match IDP", claimsSet.getIssuer()));
         }
 
-        if (!isIdToken(claimsSet)) {
-            throw new IOException("JWT Token doesn't seem to be an ID Token");
-        }
-
-        String username = claimsSet.getClaims().get(environment.getRequiredProperty("security.cognito.userclaim")).toString();
+        String username = claimsSet.getClaims().get(environment.getRequiredProperty("security.oauth2.userclaim")).toString();
 
         if (username != null) {
-            List<String> groups = (List<String>) claimsSet.getClaims().get(environment.getRequiredProperty("security.cognito.groupsclaim"));
             List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
 
-            if (groups != null && !groups.isEmpty()) {
-                grantedAuthorities = convertList(groups, group -> new SimpleGrantedAuthority(ROLE_PREFIX + group.toUpperCase()));
+            if (StringUtils.isNotBlank(environment.getProperty("security.oauth2.groupsclaim"))) {
+                List<String> groups = (List<String>) claimsSet.getClaims().get(environment.getProperty("security.oauth2.groupsclaim"));
+
+                if (groups != null && !groups.isEmpty()) {
+                    grantedAuthorities = convertList(groups, group -> new SimpleGrantedAuthority(ROLE_PREFIX + group.toUpperCase()));
+                }
             }
 
             PreAuthenticatedAuthenticationToken token = new PreAuthenticatedAuthenticationToken(username, DUMMY_PASSWORD, grantedAuthorities);
@@ -106,14 +105,7 @@ public class CognitoAutoLoginFilter extends AutoLoginFilter {
     }
 
     private boolean isIssuedCorrectly(JWTClaimsSet claimsSet) {
-        return claimsSet.getIssuer().equals(String.format(
-                environment.getRequiredProperty("security.cognito.identity_pool_url"),
-                environment.getRequiredProperty("security.cognito.region"),
-                environment.getRequiredProperty("security.cognito.userpool")));
-    }
-
-    private boolean isIdToken(JWTClaimsSet claimsSet) {
-        return claimsSet.getClaim("token_use").equals("id");
+        return claimsSet.getIssuer().equals(environment.getRequiredProperty("security.oauth2.identity_pool_url"));
     }
 
     private static <T, U> List<U> convertList(List<T> from, Function<T, U> func) {
