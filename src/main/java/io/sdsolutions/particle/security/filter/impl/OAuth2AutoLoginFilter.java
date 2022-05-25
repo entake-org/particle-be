@@ -1,5 +1,6 @@
 package io.sdsolutions.particle.security.filter.impl;
 
+import com.nimbusds.jose.proc.SimpleSecurityContext;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.proc.ConfigurableJWTProcessor;
 import io.sdsolutions.particle.security.filter.AutoLoginFilter;
@@ -31,7 +32,7 @@ public class OAuth2AutoLoginFilter extends AutoLoginFilter {
     private static final String DUMMY_PASSWORD = "password";
     private static final String ROLE_PREFIX = "ROLE_";
 
-    private final ConfigurableJWTProcessor configurableJWTProcessor;
+    private final ConfigurableJWTProcessor<SimpleSecurityContext> configurableJWTProcessor;
     private final Environment environment;
 
     @Override
@@ -39,7 +40,7 @@ public class OAuth2AutoLoginFilter extends AutoLoginFilter {
         return DUMMY_PASSWORD;
     }
 
-    public OAuth2AutoLoginFilter(AuthenticationManager authenticationManager, ConfigurableJWTProcessor configurableJWTProcessor, Environment environment) {
+    public OAuth2AutoLoginFilter(AuthenticationManager authenticationManager, ConfigurableJWTProcessor<SimpleSecurityContext> configurableJWTProcessor, Environment environment) {
         super.setAuthenticationManager(authenticationManager);
         this.configurableJWTProcessor = configurableJWTProcessor;
         this.environment = environment;

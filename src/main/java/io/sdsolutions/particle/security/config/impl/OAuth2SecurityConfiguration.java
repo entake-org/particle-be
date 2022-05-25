@@ -4,6 +4,7 @@ import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.jwk.source.RemoteJWKSet;
 import com.nimbusds.jose.proc.JWSKeySelector;
 import com.nimbusds.jose.proc.JWSVerificationKeySelector;
+import com.nimbusds.jose.proc.SimpleSecurityContext;
 import com.nimbusds.jose.util.DefaultResourceRetriever;
 import com.nimbusds.jose.util.ResourceRetriever;
 import com.nimbusds.jwt.proc.ConfigurableJWTProcessor;
@@ -33,9 +34,7 @@ public class OAuth2SecurityConfiguration extends SecurityConfiguration {
     protected AutoLoginFilter getAutoLoginFilter() {
         if (this.autoLoginFilter == null) {
             try {
-                this.autoLoginFilter = new OAuth2AutoLoginFilter(super.authenticationManagerBean(),
-                                                                    configurableJWTProcessor(),
-                                                                    this.environment);
+                this.autoLoginFilter = new OAuth2AutoLoginFilter(super.authenticationManagerBean(), configurableJWTProcessor(), this.environment);
             } catch (Exception e) {
                 LOGGER.error(e.getMessage(), e);
             }
@@ -45,7 +44,7 @@ public class OAuth2SecurityConfiguration extends SecurityConfiguration {
     }
 
     @Bean
-    public ConfigurableJWTProcessor configurableJWTProcessor() throws MalformedURLException {
+    public ConfigurableJWTProcessor<SimpleSecurityContext> configurableJWTProcessor() throws MalformedURLException {
         ResourceRetriever resourceRetriever = new DefaultResourceRetriever(
                 environment.getRequiredProperty("security.oauth2.timeout.connection", Integer.class),
                 environment.getRequiredProperty("security.oauth2.timeout.read", Integer.class));
@@ -53,9 +52,9 @@ public class OAuth2SecurityConfiguration extends SecurityConfiguration {
         URL jwkSetURL = new URL(environment.getRequiredProperty("security.oauth2.identity_pool_url") +
                         environment.getRequiredProperty("security.oauth2.jwks_suffix"));
 
-        JWKSource keySource = new RemoteJWKSet(jwkSetURL, resourceRetriever);
-        ConfigurableJWTProcessor jwtProcessor = new DefaultJWTProcessor();
-        JWSKeySelector keySelector = new JWSVerificationKeySelector(RS256, keySource);
+        JWKSource<SimpleSecurityContext> keySource = new RemoteJWKSet<>(jwkSetURL, resourceRetriever);
+        ConfigurableJWTProcessor<SimpleSecurityContext> jwtProcessor = new DefaultJWTProcessor<>();
+        JWSKeySelector<SimpleSecurityContext> keySelector = new JWSVerificationKeySelector<>(RS256, keySource);
         jwtProcessor.setJWSKeySelector(keySelector);
 
         return jwtProcessor;

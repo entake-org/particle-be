@@ -28,7 +28,7 @@ public class Auth0SecurityConfiguration extends CorsSecurityConfiguration {
 
     @Bean
     public JwtDecoder jwtDecoder() {
-        NimbusJwtDecoder jwtDecoder = (NimbusJwtDecoder)
+        NimbusJwtDecoder jwtDecoder =
                 JwtDecoders.fromOidcIssuerLocation(environment.getRequiredProperty("spring.security.oauth2.resourceserver.jwt.issuer-uri"));
 
         OAuth2TokenValidator<Jwt> audienceValidator = new AudienceValidator(environment.getRequiredProperty("auth0.audience"));
