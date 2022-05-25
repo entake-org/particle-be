@@ -4,7 +4,7 @@
 
 	<artifactId>database</artifactId>
 	<packaging>jar</packaging>
-	<version>2.6.7</version>
+	<version>2.7.0</version>
 
 	<name>particle-database</name>
 	<description>Database Configurations for the Particle Framework.</description>
@@ -35,14 +35,12 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>17</java.version>
-
-		<particle-components.version>2.5.6</particle-components.version>
 	</properties>
 
 	<parent>
 		<groupId>io.sdsolutions.particle</groupId>
 		<artifactId>dependencies</artifactId>
-		<version>2.6.7</version>
+		<version>2.7.0</version>
 	</parent>
 
 	<dependencies>
