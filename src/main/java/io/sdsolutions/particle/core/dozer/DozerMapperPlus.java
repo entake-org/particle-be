@@ -17,7 +17,7 @@ import java.util.List;
 @Component
 public class DozerMapperPlus {
 
-    private Mapper mapper;
+    private final Mapper mapper;
 
 	public DozerMapperPlus(Mapper mapper) {
 	    this.mapper = mapper;
@@ -27,11 +27,11 @@ public class DozerMapperPlus {
      * Map a list of objects of one type to a list of objects of another type. Uses an ArrayList as the
      * list implementation under the hood.
      *
-     * @param source
-     * @param clazz
-     * @param <S>
-     * @param <D>
-     * @return
+     * @param source source
+     * @param clazz class
+     * @param <S> source class
+     * @param <D> destination class
+     * @return parameterized list
      */
     public <S, D> List<D> mapList(List<S> source, Class<D> clazz) {
         List<D> destination = new ArrayList<>();

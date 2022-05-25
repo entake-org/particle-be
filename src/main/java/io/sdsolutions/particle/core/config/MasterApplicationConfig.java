@@ -7,6 +7,7 @@ import javax.servlet.MultipartConfigElement;
 import com.github.dozermapper.core.DozerBeanMapperBuilder;
 import com.github.dozermapper.core.Mapper;
 import io.sdsolutions.particle.core.dozer.BooleanStringConverter;
+import io.sdsolutions.particle.core.dozer.LocalDateToUtilDateConverter;
 import io.sdsolutions.particle.core.interceptor.JsonHijackingInterceptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -44,6 +45,7 @@ public class MasterApplicationConfig implements WebMvcConfigurer {
         return DozerBeanMapperBuilder.create()
                 .withMappingFiles(getMappingFiles())
                 .withCustomConverter(new BooleanStringConverter())
+                .withCustomConverter(new LocalDateToUtilDateConverter())
                 .build();
     }
 

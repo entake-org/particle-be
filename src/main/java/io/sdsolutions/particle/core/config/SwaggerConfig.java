@@ -1,11 +1,15 @@
 package io.sdsolutions.particle.core.config;
 
+/**
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+ */
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+/**
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.Tag;
@@ -14,6 +18,7 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger.web.*;
 
 import java.util.Date;
+*/
 
 /**
  * This represents a basic Swagger configuration for all of your endpoints. Simply having this jar on your classpath
@@ -22,7 +27,7 @@ import java.util.Date;
 // @Configuration
 // @EnableWebMvc
 public class SwaggerConfig implements WebMvcConfigurer {
-
+/**
     private Environment environment;
 
     public SwaggerConfig(Environment environment) {
@@ -68,4 +73,6 @@ public class SwaggerConfig implements WebMvcConfigurer {
                 .validatorUrl(null)
                 .build();
     }
+
+ */
 }
