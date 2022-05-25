@@ -4,7 +4,7 @@
 
     <groupId>io.sdsolutions.particle</groupId>
     <artifactId>dependencies</artifactId>
-    <version>2.6.8</version>
+    <version>2.7.0</version>
     <packaging>pom</packaging>
 
     <name>particle-dependencies</name>
@@ -38,28 +38,27 @@
         <java.version>17</java.version>
 
         <!-- Spring Boot Version -->
-        <spring-boot.version>2.6.7</spring-boot.version>
+        <spring-boot.version>2.7.0</spring-boot.version>
 
         <!-- Managed Dependency Versions -->
-        <spring-cloud.version>2020.0.4</spring-cloud.version>
-        <mongo-db-version>3.12.10</mongo-db-version>
+        <spring-cloud.version>2021.0.2</spring-cloud.version>
+        <mongo-db-version>3.12.11</mongo-db-version>
         <javax.jms.version>2.0.1</javax.jms.version>
         <swagger.version>3.0.0</swagger.version>
-        <micrometer-registry-prometheus.version>1.7.5</micrometer-registry-prometheus.version>
-        <prometheus.version>0.12.0</prometheus.version>
-        <nimbus-jose-jwt.version>9.15.2</nimbus-jose-jwt.version>
-        <smartystreets.version>3.12.2</smartystreets.version>
-        <dynamodb.version>1.12.105</dynamodb.version>
+        <micrometer-registry-prometheus.version>1.9.0</micrometer-registry-prometheus.version>
+        <prometheus.version>0.15.0</prometheus.version>
+        <nimbus-jose-jwt.version>9.22</nimbus-jose-jwt.version>
+        <smartystreets.version>3.12.10</smartystreets.version>
+        <dynamodb.version>1.12.227</dynamodb.version>
         <apache-poi.version>5.2.2</apache-poi.version>
-        <okta.version>2.1.2</okta.version>
         <jooq.version>3.16.6</jooq.version>
         <commons-fileupload-version>1.4</commons-fileupload-version>
         <dozer-version>6.5.2</dozer-version>
-        <ehcache-version>3.9.7</ehcache-version>
+        <ehcache-version>3.10.0</ehcache-version>
         <commons-lang3-version>3.12.0</commons-lang3-version>
         <commons-io-version>2.11.0</commons-io-version>
         <connector-api-version>1.5</connector-api-version>
-        <logstash-logback-version>6.6</logstash-logback-version>
+        <logstash-logback-version>7.2</logstash-logback-version>
         <hamcrest-all-version>1.3</hamcrest-all-version>
 
         <!-- Spring Override Versions -->
@@ -69,7 +68,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.7</version>
+        <version>2.7.0</version>
     </parent>
 
     <dependencyManagement>
@@ -138,12 +137,6 @@
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
                 <version>${apache-poi.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>com.okta.spring</groupId>
-                <artifactId>okta-spring-boot-starter</artifactId>
-                <version>${okta.version}</version>
             </dependency>
 
             <dependency>
