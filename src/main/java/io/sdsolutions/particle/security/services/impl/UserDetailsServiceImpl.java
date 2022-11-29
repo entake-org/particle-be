@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 public class UserDetailsServiceImpl implements UserDetailsService {
 
 	public UserDetails loadUserByUsername(String username) {
-		return new User(username, "", new ArrayList<GrantedAuthority>());
+		return new User(username, "", new ArrayList<>());
 	}
 
 }

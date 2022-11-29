@@ -1,22 +1,22 @@
 package io.sdsolutions.particle.security.config;
 
-import io.sdsolutions.particle.security.filter.AutoLoginFilter;
 import io.sdsolutions.particle.security.constants.AntMatchers;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.config.MethodInvokingBean;
-import org.springframework.beans.factory.config.MethodInvokingFactoryBean;
+import io.sdsolutions.particle.security.filter.AutoLoginFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
-import org.springframework.security.web.context.SecurityContextPersistenceFilter;
+import org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 /**
  * Spring Security Configuration - ensures that all APIs exposed at /api/* are protected. The spring security filter
@@ -26,30 +26,40 @@ import org.springframework.security.web.context.SecurityContextPersistenceFilter
  * @author Nick DiMola
  * 
  */
-public abstract class SecurityConfiguration extends CorsSecurityConfiguration {
+public class SecurityConfiguration {
 
-	@Autowired
-	private UserDetailsService userDetailsService;
+	private final UserDetailsService userDetailsService;
 
-	protected AutoLoginFilter autoLoginFilter;
+	private final CorsConfigurationProperties corsConfigurationProperties;
 
-	@Bean
-	public MethodInvokingBean methodInvokingFactoryBean() {
-		MethodInvokingBean methodInvokingBean = new MethodInvokingFactoryBean();
-		methodInvokingBean.setTargetClass(SecurityContextHolder.class);
-		methodInvokingBean.setTargetMethod("setStrategyName");
-		methodInvokingBean.setArguments(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
-		return methodInvokingBean;
+	public SecurityConfiguration(UserDetailsService userDetailsService, CorsConfigurationProperties corsConfigurationProperties) {
+		this.userDetailsService = userDetailsService;
+		this.corsConfigurationProperties = corsConfigurationProperties;
 	}
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
+	@Bean
+	public CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration corsConfig = new CorsConfiguration();
+		corsConfig.setAllowCredentials(true);
+		corsConfig.setAllowedOrigins(corsConfigurationProperties.getOrigin());
+		corsConfig.setAllowedMethods(corsConfigurationProperties.getMethods());
+		corsConfig.setAllowedHeaders(corsConfigurationProperties.getAllowheaders());
+		corsConfig.setExposedHeaders(corsConfigurationProperties.getExposeheaders());
+		corsConfig.setMaxAge(corsConfigurationProperties.getMaxage());
 
-		http.authenticationProvider(authenticationProvider()).authorizeRequests()
-				.antMatchers(
+		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", corsConfig);
+
+		return source;
+	}
+
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationProvider authenticationProvider, AutoLoginFilter autoLoginFilter) throws Exception {
+		http.authenticationProvider(authenticationProvider).authorizeHttpRequests()
+				.requestMatchers(
 					AntMatchers.PERMITTED_URLS
 				).permitAll()
-				.antMatchers(
+				.requestMatchers(
 					AntMatchers.AUTHENTICATED_URLS
 				).fullyAuthenticated();
 
@@ -59,8 +69,11 @@ public abstract class SecurityConfiguration extends CorsSecurityConfiguration {
 
 		http.cors();
 
-		http.addFilterAfter(getAutoLoginFilter(), SecurityContextPersistenceFilter.class);
+		http.addFilterAfter(autoLoginFilter, SecurityContextHolderAwareRequestFilter.class);
+
 		configureFilterChain(http);
+
+		return http.getOrBuild();
 	}
 
 	protected void configureFilterChain(HttpSecurity http) {
@@ -69,11 +82,6 @@ public abstract class SecurityConfiguration extends CorsSecurityConfiguration {
 
 	protected String getApiPath() {
 		return "/api/**";
-	}
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) {
-		auth.authenticationProvider(authenticationProvider());
 	}
 
 	@Bean
@@ -87,12 +95,12 @@ public abstract class SecurityConfiguration extends CorsSecurityConfiguration {
 		return provider;
 	}
 
-	@Override
-	@Bean(name = "myAuthenticationManager")
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
+	@Bean
+	public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+		return http.getSharedObject(AuthenticationManagerBuilder.class)
+				.userDetailsService(userDetailsService)
+				.and()
+				.build();
 	}
-
-	protected abstract AutoLoginFilter getAutoLoginFilter();
 
 }

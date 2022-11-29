@@ -1,19 +1,28 @@
 package io.sdsolutions.particle.security.config.impl;
 
-import io.sdsolutions.particle.security.config.CorsSecurityConfiguration;
+import io.sdsolutions.particle.security.config.CorsConfigurationProperties;
 import io.sdsolutions.particle.security.constants.AntMatchers;
 import io.sdsolutions.particle.security.services.SecurityService;
 import io.sdsolutions.particle.security.services.impl.SecurityServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.core.DelegatingOAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2Error;
 import org.springframework.security.oauth2.core.OAuth2TokenValidator;
 import org.springframework.security.oauth2.core.OAuth2TokenValidatorResult;
 import org.springframework.security.oauth2.jwt.*;
+import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-public class Auth0SecurityConfiguration extends CorsSecurityConfiguration {
+public class Auth0SecurityConfiguration {
+
+    @Autowired
+    private CorsConfigurationProperties corsConfigurationProperties;
 
     private final Environment environment;
 
@@ -40,14 +49,14 @@ public class Auth0SecurityConfiguration extends CorsSecurityConfiguration {
         return jwtDecoder;
     }
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers(
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+        http.authorizeHttpRequests()
+                .requestMatchers(
                         AntMatchers.PERMITTED_URLS
                 )
                 .permitAll()
-                .antMatchers(AntMatchers.AUTHENTICATED_URLS)
+                .requestMatchers(AntMatchers.AUTHENTICATED_URLS)
                 .fullyAuthenticated()
                 .and()
                 .oauth2ResourceServer()
@@ -56,7 +65,26 @@ public class Auth0SecurityConfiguration extends CorsSecurityConfiguration {
         http.csrf().disable();
 
         http.cors();
+
+        return http.getOrBuild();
     }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration corsConfig = new CorsConfiguration();
+        corsConfig.setAllowCredentials(true);
+        corsConfig.setAllowedOrigins(corsConfigurationProperties.getOrigin());
+        corsConfig.setAllowedMethods(corsConfigurationProperties.getMethods());
+        corsConfig.setAllowedHeaders(corsConfigurationProperties.getAllowheaders());
+        corsConfig.setExposedHeaders(corsConfigurationProperties.getExposeheaders());
+        corsConfig.setMaxAge(corsConfigurationProperties.getMaxage());
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", corsConfig);
+
+        return source;
+    }
+
 
     private static class AudienceValidator implements OAuth2TokenValidator<Jwt> {
         private final String audience;

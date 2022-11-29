@@ -2,11 +2,10 @@ package io.sdsolutions.particle.security.filter;
 
 import java.util.List;
 
-import javax.servlet.FilterChain;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
-import javax.servlet.http.HttpServletRequest;
-
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import io.sdsolutions.particle.exceptions.NotFoundException;
 import org.slf4j.Logger;

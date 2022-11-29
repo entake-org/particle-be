@@ -9,14 +9,14 @@ import com.nimbusds.jose.util.DefaultResourceRetriever;
 import com.nimbusds.jose.util.ResourceRetriever;
 import com.nimbusds.jwt.proc.ConfigurableJWTProcessor;
 import com.nimbusds.jwt.proc.DefaultJWTProcessor;
+import io.sdsolutions.particle.security.config.CorsConfigurationProperties;
 import io.sdsolutions.particle.security.filter.AutoLoginFilter;
 import io.sdsolutions.particle.security.filter.impl.OAuth2AutoLoginFilter;
 import io.sdsolutions.particle.security.config.SecurityConfiguration;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -25,22 +25,15 @@ import static com.nimbusds.jose.JWSAlgorithm.RS256;
 
 public class OAuth2SecurityConfiguration extends SecurityConfiguration {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(OAuth2SecurityConfiguration.class);
+    private final Environment environment;
 
-    @Autowired
-    private Environment environment;
-
-    @Override
-    protected AutoLoginFilter getAutoLoginFilter() {
-        if (this.autoLoginFilter == null) {
-            try {
-                this.autoLoginFilter = new OAuth2AutoLoginFilter(super.authenticationManagerBean(), configurableJWTProcessor(), this.environment);
-            } catch (Exception e) {
-                LOGGER.error(e.getMessage(), e);
-            }
-        }
-
-        return this.autoLoginFilter;
+    public OAuth2SecurityConfiguration(
+            UserDetailsService userDetailsService,
+            CorsConfigurationProperties corsConfigurationProperties,
+            Environment environment
+    ) {
+        super(userDetailsService, corsConfigurationProperties);
+        this.environment = environment;
     }
 
     @Bean
@@ -59,4 +52,13 @@ public class OAuth2SecurityConfiguration extends SecurityConfiguration {
 
         return jwtProcessor;
     }
+
+    @Bean
+    public AutoLoginFilter autoLoginFilter(
+            AuthenticationManager authenticationManager,
+            ConfigurableJWTProcessor<SimpleSecurityContext> configurableJWTProcessor
+    ) {
+        return new OAuth2AutoLoginFilter(authenticationManager, configurableJWTProcessor, environment);
+    }
+
 }
