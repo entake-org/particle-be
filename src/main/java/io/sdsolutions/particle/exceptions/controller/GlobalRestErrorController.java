@@ -3,10 +3,9 @@ package io.sdsolutions.particle.exceptions.controller;
 import java.util.Date;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import io.sdsolutions.particle.exceptions.model.JsonResponseDTO;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
 import org.springframework.boot.web.servlet.error.ErrorController;
@@ -23,7 +22,7 @@ import org.springframework.web.context.request.WebRequest;
 @RestController
 public class GlobalRestErrorController implements ErrorController {
 
-	private ErrorAttributes errorAttributes;
+	private final ErrorAttributes errorAttributes;
 
 	public GlobalRestErrorController(ErrorAttributes errorAttributes) {
 		this.errorAttributes = errorAttributes;

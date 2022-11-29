@@ -1,9 +1,10 @@
 package io.sdsolutions.particle.exceptions.handler;
 
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.github.dozermapper.core.MappingException;
 import io.sdsolutions.particle.exceptions.model.JsonResponseDTO;
 import io.sdsolutions.particle.exceptions.*;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,8 +28,6 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;
 import org.springframework.web.util.WebUtils;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.xml.datatype.DatatypeConfigurationException;
 
 /**
@@ -96,7 +95,7 @@ public class GlobalRestExceptionHandler extends DefaultHandlerExceptionResolver 
 		return handleException(e, ((GenericRestException) e).getStatus(), request, response);
 	}
 
-	@ExceptionHandler(value = { InternalServerException.class, IllegalStateException.class, MappingException.class, RuntimeException.class })
+	@ExceptionHandler(value = { InternalServerException.class, IllegalStateException.class, RuntimeException.class })
 	protected ResponseEntity<Object> handleAllException(RuntimeException e, WebRequest request, HttpServletResponse response) {
 		return handleException(e, HttpStatus.INTERNAL_SERVER_ERROR, request, response);
 	}
@@ -152,16 +151,9 @@ public class GlobalRestExceptionHandler extends DefaultHandlerExceptionResolver 
 		response.reset();
 
 		switch (status) {
-			case INTERNAL_SERVER_ERROR:
-				message = handleInternalServerError(e, request);
-				break;
-			case SERVICE_UNAVAILABLE:
-			case UNSUPPORTED_MEDIA_TYPE:
-				LOGGER.error(e.getMessage(), e);
-				break;
-			default:
-				LOGGER.debug(e.getMessage(), e);
-				break;
+			case INTERNAL_SERVER_ERROR -> message = handleInternalServerError(e, request);
+			case SERVICE_UNAVAILABLE, UNSUPPORTED_MEDIA_TYPE -> LOGGER.error(e.getMessage(), e);
+			default -> LOGGER.debug(e.getMessage(), e);
 		}
 
 		return new ResponseEntity<>(getResponseDto(message, status), getHeaders(), status);

@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>exceptions</artifactId>
-	<version>2.7.0</version>
+	<version>3.0.0</version>
 	<packaging>jar</packaging>
 
 	<name>particle-exceptions</name>
@@ -40,7 +40,7 @@
 	<parent>
 		<groupId>io.sdsolutions.particle</groupId>
 		<artifactId>dependencies</artifactId>
-		<version>2.7.0</version>
+		<version>3.0.0</version>
 	</parent>
 
 	<dependencies>
@@ -55,8 +55,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
 		</dependency>
 
 		<dependency>
@@ -72,11 +72,6 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>com.github.dozermapper</groupId>
-			<artifactId>dozer-core</artifactId>
 		</dependency>
 
 		<dependency>
