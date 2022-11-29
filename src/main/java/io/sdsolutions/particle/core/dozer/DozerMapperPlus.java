@@ -1,7 +1,6 @@
 package io.sdsolutions.particle.core.dozer;
 
-import com.github.dozermapper.core.Mapper;
-import com.github.dozermapper.core.MappingException;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -17,9 +16,9 @@ import java.util.List;
 @Component
 public class DozerMapperPlus {
 
-    private final Mapper mapper;
+    private final ModelMapper mapper;
 
-	public DozerMapperPlus(Mapper mapper) {
+	public DozerMapperPlus(ModelMapper mapper) {
 	    this.mapper = mapper;
     }
 
@@ -46,7 +45,7 @@ public class DozerMapperPlus {
     }
 
 
-    public <T> T map(Object source, Class<T> destinationClass, String mapId) throws MappingException {
+    public <T> T map(Object source, Class<T> destinationClass, String mapId) {
         if (source == null) {
             return null;
         }
@@ -54,7 +53,7 @@ public class DozerMapperPlus {
         return mapper.map(source, destinationClass, mapId);
     }
 
-    public <T> T map(Object source, Class<T> destinationClass) throws MappingException {
+    public <T> T map(Object source, Class<T> destinationClass) {
         if (source == null) {
             return null;
         }

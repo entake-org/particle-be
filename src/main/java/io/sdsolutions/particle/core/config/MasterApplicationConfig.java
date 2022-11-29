@@ -1,20 +1,21 @@
 package io.sdsolutions.particle.core.config;
 
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.*;
 
-import javax.servlet.MultipartConfigElement;
+import jakarta.servlet.MultipartConfigElement;
 
-import com.github.dozermapper.core.DozerBeanMapperBuilder;
-import com.github.dozermapper.core.Mapper;
-import io.sdsolutions.particle.core.dozer.BooleanStringConverter;
-import io.sdsolutions.particle.core.dozer.LocalDateToUtilDateConverter;
 import io.sdsolutions.particle.core.interceptor.JsonHijackingInterceptor;
+import org.modelmapper.AbstractConverter;
+import org.modelmapper.Converter;
+import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
 import org.springframework.context.annotation.Bean;
-import org.springframework.core.env.Environment;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -37,18 +38,6 @@ public class MasterApplicationConfig implements WebMvcConfigurer {
     @Autowired
     private JsonHijackingInterceptor jsonHijackingInterceptor;
 
-    @Autowired
-    private Environment environment;
-
-    @Bean
-    public Mapper dozerBeanMapper() {
-        return DozerBeanMapperBuilder.create()
-                .withMappingFiles(getMappingFiles())
-                .withCustomConverter(new BooleanStringConverter())
-                .withCustomConverter(new LocalDateToUtilDateConverter())
-                .build();
-    }
-
     @Bean
     public MultipartConfigElement multipartConfigElement() {
         MultipartConfigFactory factory = new MultipartConfigFactory();
@@ -65,8 +54,71 @@ public class MasterApplicationConfig implements WebMvcConfigurer {
         return new ObjectMapper();
     }
 
-    protected List<String> getMappingFiles() {
+    @Bean
+    public ModelMapper modelMapper() {
+        ModelMapper modelMapper = new ModelMapper();
+        for (Converter<?, ?> converter : getModelMapperConverters()) {
+            modelMapper.addConverter(converter);
+        }
+
+        return modelMapper;
+    }
+
+    protected List<Converter<?, ?>> getModelMapperConverters() {
         return Collections.emptyList();
+    }
+
+    protected Map<String, Converter<?, ?>> availableModelMapperConverters() {
+        AbstractConverter<String, Boolean> stringBooleanConverter = new AbstractConverter<>() {
+            @Override
+            protected Boolean convert(String source) {
+                if (source != null) {
+                    if (source.toLowerCase().startsWith("y")) {
+                        return Boolean.TRUE;
+                    } else if (source.toLowerCase().startsWith("n")) {
+                        return Boolean.FALSE;
+                    }
+                }
+                return Boolean.TRUE;
+            }
+        };
+
+        AbstractConverter<Boolean, String> booleanStringConverter = new AbstractConverter<>() {
+            @Override
+            protected String convert(Boolean source) {
+                return source != null && (source) ? "Yes" : "No";
+            }
+        };
+
+        AbstractConverter<LocalDateTime, Date> localDateTimeDateConverter = new AbstractConverter<>() {
+            @Override
+            protected Date convert(LocalDateTime source) {
+                if (source == null) {
+                    return null;
+                }
+
+                return Date.from(source.toInstant(ZoneOffset.UTC));
+            }
+        };
+
+        AbstractConverter<Date, LocalDateTime> dateLocalDateTimeConverter = new AbstractConverter<>() {
+            @Override
+            protected LocalDateTime convert(Date source) {
+                if (source == null) {
+                    return null;
+                }
+
+                return Instant.ofEpochMilli(source.getTime()).atOffset(ZoneOffset.UTC).toLocalDateTime();
+            }
+        };
+
+        Map<String, Converter<?, ?>> converters = new HashMap<>();
+        converters.put("stringBoolean", stringBooleanConverter);
+        converters.put("booleanString", booleanStringConverter);
+        converters.put("localDateTimeDate", localDateTimeDateConverter);
+        converters.put("dateLocalDateTime", dateLocalDateTimeConverter);
+
+        return converters;
     }
 
     @Override
