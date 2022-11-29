@@ -1,11 +1,11 @@
 package io.sdsolutions.particle.database.util;
 
+import jakarta.servlet.ServletContextEvent;
+import jakarta.servlet.ServletContextListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
-import javax.servlet.ServletContextEvent;
-import javax.servlet.ServletContextListener;
 import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;

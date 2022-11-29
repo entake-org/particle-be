@@ -4,7 +4,7 @@
 
 	<artifactId>database</artifactId>
 	<packaging>jar</packaging>
-	<version>2.7.0</version>
+	<version>3.0.0</version>
 
 	<name>particle-database</name>
 	<description>Database Configurations for the Particle Framework.</description>
@@ -40,7 +40,7 @@
 	<parent>
 		<groupId>io.sdsolutions.particle</groupId>
 		<artifactId>dependencies</artifactId>
-		<version>2.7.0</version>
+		<version>3.0.0</version>
 	</parent>
 
 	<dependencies>
@@ -76,8 +76,8 @@
 		</dependency>
 
 		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>javax.servlet-api</artifactId>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
 		</dependency>
 
 		<dependency>

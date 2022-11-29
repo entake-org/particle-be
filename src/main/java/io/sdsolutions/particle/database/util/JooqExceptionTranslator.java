@@ -32,6 +32,8 @@ import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
 import org.springframework.jdbc.support.SQLExceptionTranslator;
 import org.springframework.jdbc.support.SQLStateSQLExceptionTranslator;
 
+import java.io.Serial;
+
 /**
  * This class transforms SQLException into a Spring specific DataAccessException. The idea behind this is borrowed from Adam
  * Zell's Gist
@@ -48,6 +50,7 @@ public class JooqExceptionTranslator extends DefaultExecuteListener {
 	/**
 	 * Generated UID
 	 */
+	@Serial
 	private static final long serialVersionUID = -2450323227461061152L;
 
 	@Override
