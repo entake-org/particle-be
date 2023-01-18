@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>core</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
     <packaging>jar</packaging>
 
     <name>particle-core</name>
@@ -40,7 +40,7 @@
     <parent>
         <groupId>io.sdsolutions.particle</groupId>
         <artifactId>dependencies</artifactId>
-        <version>3.0.0</version>
+        <version>3.0.1</version>
     </parent>
 
     <dependencies>
@@ -54,11 +54,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-
-        <!--dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-boot-starter</artifactId>
-        </dependency-->
 
         <dependency>
             <groupId>org.apache.commons</groupId>
