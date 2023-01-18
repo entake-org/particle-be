@@ -4,7 +4,7 @@
 
     <groupId>io.sdsolutions.particle</groupId>
     <artifactId>dependencies</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.1</version>
     <packaging>pom</packaging>
 
     <name>particle-dependencies</name>
@@ -38,29 +38,28 @@
         <java.version>17</java.version>
 
         <!-- Spring Boot Version -->
-        <spring-boot.version>3.0.0</spring-boot.version>
+        <spring-boot.version>3.0.1</spring-boot.version>
 
         <!-- Managed Dependency Versions -->
-        <spring-cloud.version>2021.0.2</spring-cloud.version>
+        <spring-cloud.version>2022.0.0</spring-cloud.version>
         <mongo-db-version>3.12.11</mongo-db-version>
         <javax.jms.version>2.0.1</javax.jms.version>
-        <swagger.version>3.0.0</swagger.version>
         <micrometer-registry-prometheus.version>1.9.0</micrometer-registry-prometheus.version>
-        <prometheus.version>0.15.0</prometheus.version>
-        <nimbus-jose-jwt.version>9.22</nimbus-jose-jwt.version>
-        <smartystreets.version>3.12.10</smartystreets.version>
-        <dynamodb.version>1.12.227</dynamodb.version>
-        <apache-poi.version>5.2.2</apache-poi.version>
-        <jooq.version>3.16.6</jooq.version>
+        <prometheus.version>0.16.0</prometheus.version>
+        <nimbus-jose-jwt.version>9.28</nimbus-jose-jwt.version>
+        <smartystreets.version>3.13.11</smartystreets.version>
+        <dynamodb.version>1.12.385</dynamodb.version>
+        <apache-poi.version>5.2.3</apache-poi.version>
+        <jooq.version>3.17.7</jooq.version>
         <commons-fileupload-version>1.4</commons-fileupload-version>
-        <ehcache-version>3.10.0</ehcache-version>
+        <ehcache-version>3.10.8</ehcache-version>
         <commons-lang3-version>3.12.0</commons-lang3-version>
         <commons-io-version>2.11.0</commons-io-version>
         <commons-beanutils-version>1.9.4</commons-beanutils-version>
         <connector-api-version>1.5</connector-api-version>
         <logstash-logback-version>7.2</logstash-logback-version>
         <hamcrest-all-version>1.3</hamcrest-all-version>
-        <modelmapper.version>3.1.0</modelmapper.version>
+        <modelmapper.version>3.1.1</modelmapper.version>
 
         <!-- Spring Override Versions -->
         <validation-api-version>1.1.0.Final</validation-api-version>
@@ -69,7 +68,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.0</version>
+        <version>3.0.1</version>
     </parent>
 
     <dependencyManagement>
@@ -90,12 +89,6 @@
                 <groupId>javax.jms</groupId>
                 <artifactId>javax.jms-api</artifactId>
                 <version>${javax.jms.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.springfox</groupId>
-                <artifactId>springfox-boot-starter</artifactId>
-                <version>${swagger.version}</version>
             </dependency>
 
             <dependency>
