@@ -4,7 +4,7 @@
 
 	<artifactId>database</artifactId>
 	<packaging>jar</packaging>
-	<version>3.0.0</version>
+	<version>3.0.1</version>
 
 	<name>particle-database</name>
 	<description>Database Configurations for the Particle Framework.</description>
@@ -40,7 +40,7 @@
 	<parent>
 		<groupId>io.sdsolutions.particle</groupId>
 		<artifactId>dependencies</artifactId>
-		<version>3.0.0</version>
+		<version>3.0.1</version>
 	</parent>
 
 	<dependencies>
