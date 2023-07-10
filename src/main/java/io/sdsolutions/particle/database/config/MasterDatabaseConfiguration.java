@@ -4,7 +4,6 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.DependsOn;
 import org.springframework.context.annotation.Primary;
@@ -16,10 +15,11 @@ import org.springframework.jdbc.datasource.lookup.JndiDataSourceLookup;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import org.springframework.util.StringUtils;
 
 /**
  * Base RDBMS configuration. Offers up a dataSource that can be configured using jndi (spring.datasource.jndi).
- * Alternatively, you can provide all of the connection parameters required and a HikariCP connection pooled datasource
+ * Alternatively, you can provide all the connection parameters required and a HikariCP connection pooled datasource
  * will be created. This makes it viable to build out applications as runnable jar files that have Tomcat/Jetty/etc
  * embedded, and can function as production components without using an external app server.
  *
@@ -29,20 +29,21 @@ public class MasterDatabaseConfiguration {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(MasterDatabaseConfiguration.class);
 
-	@Autowired
-	private Environment environment;
-
 	@Bean
-	public DataSource dataSource() {
+	public DataSource dataSource(Environment environment) {
 		final JndiDataSourceLookup dataSourceLookup = new JndiDataSourceLookup();
 		dataSourceLookup.setResourceRef(true);
 
 		DataSource dataSource = null;
 
-		try {
-			dataSource = dataSourceLookup.getDataSource(environment.getRequiredProperty("spring.datasource.jndi"));
-		} catch (DataSourceLookupFailureException e) {
-			LOGGER.debug("Can't find JNDI Data Source", e);
+		String jndiName = environment.getProperty("spring.datasource.jndi");
+
+		if (StringUtils.hasText(jndiName)) {
+			try {
+				dataSource = dataSourceLookup.getDataSource(jndiName);
+			} catch (DataSourceLookupFailureException e) {
+				LOGGER.debug("Can't find JNDI Data Source", e);
+			}
 		}
 
 		if (dataSource == null) {
