@@ -4,7 +4,7 @@
 
     <groupId>io.sdsolutions.particle</groupId>
     <artifactId>dependencies</artifactId>
-    <version>3.0.1</version>
+    <version>3.1.1</version>
     <packaging>pom</packaging>
 
     <name>particle-dependencies</name>
@@ -35,40 +35,36 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>17</java.version>
+        <java.version>20</java.version>
 
         <!-- Spring Boot Version -->
-        <spring-boot.version>3.0.1</spring-boot.version>
+        <spring-boot.version>3.1.1</spring-boot.version>
 
         <!-- Managed Dependency Versions -->
-        <spring-cloud.version>2022.0.0</spring-cloud.version>
-        <mongo-db-version>3.12.11</mongo-db-version>
-        <javax.jms.version>2.0.1</javax.jms.version>
-        <micrometer-registry-prometheus.version>1.9.0</micrometer-registry-prometheus.version>
+        <spring-cloud.version>2022.0.3</spring-cloud.version>
+        <mongo-db-version>3.12.14</mongo-db-version>
+        <micrometer-registry-prometheus.version>1.11.1</micrometer-registry-prometheus.version>
         <prometheus.version>0.16.0</prometheus.version>
-        <nimbus-jose-jwt.version>9.28</nimbus-jose-jwt.version>
-        <smartystreets.version>3.13.11</smartystreets.version>
-        <dynamodb.version>1.12.385</dynamodb.version>
+        <nimbus-jose-jwt.version>9.31</nimbus-jose-jwt.version>
+        <smartystreets.version>3.14.0</smartystreets.version>
+        <dynamodb.version>1.12.504</dynamodb.version>
         <apache-poi.version>5.2.3</apache-poi.version>
-        <jooq.version>3.17.7</jooq.version>
-        <commons-fileupload-version>1.4</commons-fileupload-version>
+        <jooq.version>3.18.5</jooq.version>
+        <commons-fileupload-version>1.5</commons-fileupload-version>
         <ehcache-version>3.10.8</ehcache-version>
         <commons-lang3-version>3.12.0</commons-lang3-version>
-        <commons-io-version>2.11.0</commons-io-version>
+        <commons-io-version>2.13.0</commons-io-version>
         <commons-beanutils-version>1.9.4</commons-beanutils-version>
         <connector-api-version>1.5</connector-api-version>
-        <logstash-logback-version>7.2</logstash-logback-version>
+        <logstash-logback-version>7.4</logstash-logback-version>
         <hamcrest-all-version>1.3</hamcrest-all-version>
         <modelmapper.version>3.1.1</modelmapper.version>
-
-        <!-- Spring Override Versions -->
-        <validation-api-version>1.1.0.Final</validation-api-version>
     </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.0.1</version>
+        <version>3.1.1</version>
     </parent>
 
     <dependencyManagement>
@@ -83,12 +79,6 @@
                 <groupId>org.mongodb</groupId>
                 <artifactId>mongo-java-driver</artifactId>
                 <version>${mongo-db-version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>javax.jms</groupId>
-                <artifactId>javax.jms-api</artifactId>
-                <version>${javax.jms.version}</version>
             </dependency>
 
             <dependency>
