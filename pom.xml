@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>security</artifactId>
-	<version>3.0.1</version>
+	<version>3.1.1</version>
 	<packaging>jar</packaging>
 
 	<name>particle-security</name>
@@ -34,15 +34,15 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>17</java.version>
+		<java.version>20</java.version>
 
-		<particle-exceptions.version>3.0.1</particle-exceptions.version>
+		<particle-exceptions.version>3.1.1</particle-exceptions.version>
 	</properties>
 
 	<parent>
 		<groupId>io.sdsolutions.particle</groupId>
 		<artifactId>dependencies</artifactId>
-		<version>3.0.1</version>
+		<version>3.1.1</version>
 	</parent>
 
 	<dependencies>
