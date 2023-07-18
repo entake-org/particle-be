@@ -4,6 +4,7 @@ import org.modelmapper.AbstractConverter;
 
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.time.ZoneOffset;
 import java.util.Date;
 
@@ -67,6 +68,28 @@ public class MapperConverters {
             }
 
             return (byte) (source ? 1 : 0);
+        }
+    };
+
+    public static AbstractConverter<LocalDateTime, OffsetDateTime> LOCALDATETIME_OFFSETDATETIME = new AbstractConverter<>() {
+        @Override
+        protected OffsetDateTime convert(LocalDateTime source) {
+            if (source == null) {
+                return null;
+            }
+
+            return source.atOffset(ZoneOffset.UTC);
+        }
+    };
+
+    public static AbstractConverter<OffsetDateTime, LocalDateTime> OFFSETDATETIME_LOCALDATETIME = new AbstractConverter<>() {
+        @Override
+        protected LocalDateTime convert(OffsetDateTime source) {
+            if (source == null) {
+                return null;
+            }
+
+            return source.toLocalDateTime();
         }
     };
 

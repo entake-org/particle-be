@@ -126,8 +126,7 @@ public class TransformToExcelServiceImpl implements TransformToExcelService {
 	 *            excel workbook
 	 * @return map of cell styles
 	 * @see org.apache.poi.ss.usermodel.BuiltinFormats BuiltinFormats
-	 * 
-	 * @author Gopal - 04/22/2015
+	 *
 	 */
 	protected Map<Class<?>, CellStyle> createCellStyleWithDataFormat(Workbook workbook) {
 		Map<Class<?>, CellStyle> cellStylesMap = new HashMap<Class<?>, CellStyle>();
