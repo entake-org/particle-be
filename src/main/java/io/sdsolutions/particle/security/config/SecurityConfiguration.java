@@ -5,8 +5,10 @@ import io.sdsolutions.particle.security.filter.AutoLoginFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -55,19 +57,21 @@ public class SecurityConfiguration {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationProvider authenticationProvider, AutoLoginFilter autoLoginFilter) throws Exception {
-		http.authenticationProvider(authenticationProvider).authorizeHttpRequests()
+		http.authenticationProvider(authenticationProvider).authorizeHttpRequests(
+		authorize -> authorize
 				.requestMatchers(
 					AntMatchers.PERMITTED_URLS
 				).permitAll()
 				.requestMatchers(
 					AntMatchers.AUTHENTICATED_URLS
-				).fullyAuthenticated();
+				).fullyAuthenticated()
+		);
 
-		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
-		http.csrf().disable();
+		http.csrf(AbstractHttpConfigurer::disable);
 
-		http.cors();
+		http.cors(Customizer.withDefaults());
 
 		http.addFilterAfter(autoLoginFilter, SecurityContextHolderAwareRequestFilter.class);
 
