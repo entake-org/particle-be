@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>audit</artifactId>
-	<version>3.1.5</version>
+	<version>3.2.4</version>
 	<packaging>jar</packaging>
 
 	<name>particle-audit</name>
@@ -36,13 +36,13 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>21</java.version>
 
-		<particle-security.version>3.1.5</particle-security.version>
+		<particle-security.version>3.2.4</particle-security.version>
 	</properties>
 
 	<parent>
 		<groupId>io.sdsolutions.particle</groupId>
 		<artifactId>dependencies</artifactId>
-		<version>3.1.5</version>
+		<version>3.2.4</version>
 	</parent>
 
 	<dependencies>
