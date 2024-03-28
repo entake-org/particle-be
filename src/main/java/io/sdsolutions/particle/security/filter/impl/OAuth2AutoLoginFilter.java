@@ -56,6 +56,7 @@ public class OAuth2AutoLoginFilter extends AutoLoginFilter {
         try {
             super.successfulAuthentication(request, response, handleAuthentication(request));
         } catch (IOException e) {
+            LOGGER.error(e.getMessage(), e);
             throw new PreAuthenticatedCredentialsNotFoundException(HttpStatus.UNAUTHORIZED.toString());
         }
     }
