@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>parent</artifactId>
-    <version>3.2.5</version>
+    <version>3.2.6</version>
     <packaging>pom</packaging>
 
     <name>particle-parent</name>
@@ -41,7 +41,7 @@
         <particle-core-version>3.2.5</particle-core-version>
         <particle-database-version>3.2.5</particle-database-version>
         <particle-exceptions-version>3.2.5</particle-exceptions-version>
-        <particle-security-version>3.2.5</particle-security-version>
+        <particle-security-version>3.2.6</particle-security-version>
         <particle-smartystreets-version>3.2.5</particle-smartystreets-version>
     </properties>
 
