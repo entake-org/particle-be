@@ -4,7 +4,10 @@ import com.nimbusds.jose.proc.SimpleSecurityContext;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.proc.ConfigurableJWTProcessor;
 import io.sdsolutions.particle.security.filter.AutoLoginFilter;
+import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.ServletRequest;
+import jakarta.servlet.ServletResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -44,6 +47,22 @@ public class OAuth2AutoLoginFilter extends AutoLoginFilter {
         super.setAuthenticationManager(authenticationManager);
         this.configurableJWTProcessor = configurableJWTProcessor;
         this.environment = environment;
+    }
+
+    @Override
+    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+        if (isPublicEndpoint((HttpServletRequest) request)) {
+            chain.doFilter(request, response);
+        } else {
+            super.doFilter(request, response, chain);
+        }
+    }
+
+    private boolean isPublicEndpoint(HttpServletRequest request) {
+        String uri = request.getRequestURI();
+        uri = uri.substring(uri.indexOf('/', 1));
+
+        return uri.startsWith("/api/public") || uri.startsWith("/actuator");
     }
 
     @Override
