@@ -1,6 +1,6 @@
 target/
 .settings/
 .idea/
-hipaa-audit.iml
+*.iml
 .classpath
 .project
