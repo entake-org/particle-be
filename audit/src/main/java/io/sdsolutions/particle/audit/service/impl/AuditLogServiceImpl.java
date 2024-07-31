@@ -13,11 +13,12 @@ import org.apache.commons.lang3.reflect.FieldUtils;
 import org.apache.commons.lang3.reflect.MethodUtils;
 import io.sdsolutions.particle.audit.model.AuditEventDTO;
 import io.sdsolutions.particle.audit.service.AuditLogService;
-import io.sdsolutions.particle.security.model.UserDTO;
-import io.sdsolutions.particle.security.services.SecurityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service("auditLogService")
@@ -28,11 +29,9 @@ public class AuditLogServiceImpl implements AuditLogService {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(AuditLogServiceImpl.class);
 
-	private final SecurityService securityService;
 	private final AuditLogWriterService auditLogWriterService;
 
-	public AuditLogServiceImpl(SecurityService securityService, AuditLogWriterService auditLogWriterService) {
-		this.securityService = securityService;
+	public AuditLogServiceImpl(AuditLogWriterService auditLogWriterService) {
 		this.auditLogWriterService = auditLogWriterService;
 	}
 
@@ -50,7 +49,7 @@ public class AuditLogServiceImpl implements AuditLogService {
 	 */
 	private List<AuditEventDTO> getEvents(Object o, String eventType, String app, String function) throws NoSuchFieldException {
 		List<AuditEventDTO> events = new ArrayList<>();
-		UserDTO user = securityService.getLoggedInUser();
+		Authentication user = SecurityContextHolder.getContext().getAuthentication();
 
 		if (o instanceof Collection<?>) {
 			for (Object obj : (Collection<?>) o) {
@@ -67,21 +66,15 @@ public class AuditLogServiceImpl implements AuditLogService {
 	 * This method will produce the event object and will make the necessary call to extract the identifier from the
 	 * endpoint's response.
 	 */
-	private AuditEventDTO extractEventDTO(Object o, String eventType, String app, String function, UserDTO user) throws NoSuchFieldException {
+	private AuditEventDTO extractEventDTO(Object o, String eventType, String app, String function, Authentication user) throws NoSuchFieldException {
 		AuditEventDTO dto = new AuditEventDTO();
 		dto.setApp(app);
 		dto.setIdentifier(extractIdentifier(o));
 		dto.setFunction(function);
-
-		if (user.getRoles() != null && !user.getRoles().isEmpty()) {
-			dto.setRole(user.getRoles().get(0));
-		} else {
-			dto.setRole("ROLE_USER");
-		}
-		
 		dto.setTimestamp(new Date());
 		dto.setType(eventType);
-		dto.setUserName(user.getUserId());
+		dto.setUserName(user.getPrincipal().toString());
+        dto.setRoles(user.getAuthorities().stream().map(GrantedAuthority::getAuthority).toList());
 
 		return dto;
 	}
@@ -92,9 +85,7 @@ public class AuditLogServiceImpl implements AuditLogService {
 	 * field.
 	 */
 	private String extractIdentifier(Object o) throws NoSuchFieldException {
-		String returnValue = null;
-
-		returnValue = extractIdentifierFromField(o);
+		String returnValue = extractIdentifierFromField(o);
 		returnValue = returnValue != null ? returnValue : extractIdentifierFromMethod(o);
 
 		if (returnValue != null) {

@@ -3,6 +3,8 @@ package io.sdsolutions.particle.security.filter.impl;
 import com.nimbusds.jose.proc.SimpleSecurityContext;
 import com.nimbusds.jwt.JWTClaimsSet;
 import com.nimbusds.jwt.proc.ConfigurableJWTProcessor;
+import io.sdsolutions.particle.security.config.SecurityConfiguration;
+import io.sdsolutions.particle.security.constants.AntMatchers;
 import io.sdsolutions.particle.security.filter.AutoLoginFilter;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -14,6 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
@@ -51,18 +54,30 @@ public class OAuth2AutoLoginFilter extends AutoLoginFilter {
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        if (isPublicEndpoint((HttpServletRequest) request)) {
+        if (isPermitted((HttpServletRequest) request)) {
             chain.doFilter(request, response);
         } else {
             super.doFilter(request, response, chain);
         }
     }
 
-    private boolean isPublicEndpoint(HttpServletRequest request) {
+    private boolean isPermitted(HttpServletRequest request) {
+        if (HttpMethod.OPTIONS.toString().equalsIgnoreCase(request.getMethod())) {
+            return true;
+        }
+
         String uri = request.getRequestURI();
         uri = uri.substring(uri.indexOf('/', 1));
 
-        return uri.startsWith("/api/public") || uri.startsWith("/actuator");
+        for (String urlPattern : getPublicUrlPatterns()) {
+            String urlStartsWith = StringUtils.replace(urlPattern, "/**", "");
+
+            if (uri.startsWith(urlStartsWith)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
@@ -133,5 +148,13 @@ public class OAuth2AutoLoginFilter extends AutoLoginFilter {
         return from.stream().map(func).collect(Collectors.toList());
     }
 
+    protected String[] getPublicUrlPatterns() {
+        String urlList = environment.getProperty(SecurityConfiguration.PUBLIC_URLS_PROPERTY);
+        if (StringUtils.isNotBlank(urlList)) {
+            return urlList.split(",");
+        }
+
+        return AntMatchers.PERMITTED_URLS;
+    }
 
 }

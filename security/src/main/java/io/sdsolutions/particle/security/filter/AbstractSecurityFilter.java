@@ -22,13 +22,13 @@ public abstract class AbstractSecurityFilter extends GenericFilterBean {
 			doFilterImpl(servletRequest, servletResponse, filterChain);
 			filterChain.doFilter(servletRequest, servletResponse);
 		} catch (UnauthorizedException e) {
-			logger.debug("Unauthorized exception. handling", e);
+			logger.debug("UnauthorizedException. handling", e);
 			handleException((HttpServletResponse) servletResponse, HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED.getReasonPhrase());
 		} catch (AccessDeniedException e) {
-			logger.debug("AccessDeniedException exception. handling", e);
+			logger.debug("AccessDeniedException. handling", e);
 			handleException((HttpServletResponse) servletResponse, HttpStatus.FORBIDDEN.value(), e.getMessage());
 		} catch (NotFoundException e) {
-			logger.debug("NotFound exception. handling", e);
+			logger.debug("NotFoundException. handling", e);
 			handleException((HttpServletResponse) servletResponse, HttpStatus.NOT_FOUND.value(), e.getMessage());
 		}
 	}

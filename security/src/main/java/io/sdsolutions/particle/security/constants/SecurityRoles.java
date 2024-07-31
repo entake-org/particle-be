@@ -18,7 +18,6 @@ public class SecurityRoles {
 	protected static final String END = "')";
 	protected static final String OR = "','";
 
-	// Provider Level Roles
 	public static final String USER_ROLE = "ROLE_USER";
 
 	// Spring Security Role Declarations

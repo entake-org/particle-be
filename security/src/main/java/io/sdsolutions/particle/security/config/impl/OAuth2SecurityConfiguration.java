@@ -16,7 +16,6 @@ import io.sdsolutions.particle.security.config.SecurityConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.userdetails.UserDetailsService;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -25,15 +24,12 @@ import static com.nimbusds.jose.JWSAlgorithm.RS256;
 
 public class OAuth2SecurityConfiguration extends SecurityConfiguration {
 
-    private final Environment environment;
-
     public OAuth2SecurityConfiguration(
-            UserDetailsService userDetailsService,
-            CorsConfigurationProperties corsConfigurationProperties,
-            Environment environment
+            Environment environment,
+            CorsConfigurationProperties corsConfigurationProperties
+
     ) {
-        super(userDetailsService, corsConfigurationProperties);
-        this.environment = environment;
+        super(environment, corsConfigurationProperties);
     }
 
     @Bean

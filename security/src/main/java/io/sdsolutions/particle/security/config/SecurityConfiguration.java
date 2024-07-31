@@ -2,7 +2,10 @@ package io.sdsolutions.particle.security.config;
 
 import io.sdsolutions.particle.security.constants.AntMatchers;
 import io.sdsolutions.particle.security.filter.AutoLoginFilter;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
@@ -10,8 +13,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.*;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
@@ -19,6 +21,8 @@ import org.springframework.security.web.context.SecurityContextHolderFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.ArrayList;
 
 /**
  * Spring Security Configuration - ensures that all APIs exposed at /api/* are protected. The spring security filter
@@ -30,13 +34,19 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
  */
 public class SecurityConfiguration {
 
-	private final UserDetailsService userDetailsService;
+    public static final String PUBLIC_URLS_PROPERTY = "security.urls.public";
+    public static final String AUTHENTICATED_URLS_PROPERTY = "security.urls.authenticated";
 
-	private final CorsConfigurationProperties corsConfigurationProperties;
+    protected final Environment environment;
+	protected final CorsConfigurationProperties corsConfigurationProperties;
 
-	public SecurityConfiguration(UserDetailsService userDetailsService, CorsConfigurationProperties corsConfigurationProperties) {
-		this.userDetailsService = userDetailsService;
+    private final UserDetailsService userDetailsService;
+
+	public SecurityConfiguration(Environment environment, CorsConfigurationProperties corsConfigurationProperties) {
+        this.environment = environment;
 		this.corsConfigurationProperties = corsConfigurationProperties;
+
+        this.userDetailsService = username -> new User(username, "", new ArrayList<>());
 	}
 
 	@Bean
@@ -60,10 +70,13 @@ public class SecurityConfiguration {
 		http.authenticationProvider(authenticationProvider).authorizeHttpRequests(
 		authorize -> authorize
 				.requestMatchers(
-					AntMatchers.PERMITTED_URLS
+					getPublicUrlPatterns()
 				).permitAll()
+                .requestMatchers(
+                    HttpMethod.OPTIONS, "/**"
+                ).permitAll()
 				.requestMatchers(
-					AntMatchers.AUTHENTICATED_URLS
+					getAuthenticatedUrlPatterns()
 				).fullyAuthenticated()
 		);
 
@@ -103,8 +116,25 @@ public class SecurityConfiguration {
 	public AuthenticationManager authManager(HttpSecurity http) throws Exception {
 		return http.getSharedObject(AuthenticationManagerBuilder.class)
 				.userDetailsService(userDetailsService)
-				.and()
-				.build();
+                .and().build();
 	}
+
+    protected String[] getPublicUrlPatterns() {
+        String urlList = environment.getProperty(PUBLIC_URLS_PROPERTY);
+        if (StringUtils.isNotBlank(urlList)) {
+            return urlList.split(",");
+        }
+
+        return AntMatchers.PERMITTED_URLS;
+    }
+
+    protected String[] getAuthenticatedUrlPatterns() {
+        String urlList = environment.getProperty(AUTHENTICATED_URLS_PROPERTY);
+        if (StringUtils.isNotBlank(urlList)) {
+            return urlList.split(",");
+        }
+
+        return AntMatchers.AUTHENTICATED_URLS;
+    }
 
 }

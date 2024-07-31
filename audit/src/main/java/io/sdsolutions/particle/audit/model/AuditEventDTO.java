@@ -16,8 +16,7 @@ public class AuditEventDTO {
 	private String function;
 	private String type;
 	private String userName;
-	private String role;
-	private List<String> organizations;
+	private List<String> roles;
 	private Date timestamp;
 
 	public String getIdentifier() {
@@ -60,20 +59,12 @@ public class AuditEventDTO {
 		this.userName = userName;
 	}
 
-	public String getRole() {
-		return role;
+	public List<String> getRoles() {
+		return roles;
 	}
 
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	public List<String> getOrganizations() {
-		return organizations;
-	}
-
-	public void setOrganizations(List<String> organizations) {
-		this.organizations = organizations;
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
 	}
 
 	public Date getTimestamp() {

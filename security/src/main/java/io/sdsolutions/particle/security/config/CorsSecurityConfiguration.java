@@ -14,7 +14,9 @@ public class CorsSecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration corsConfig = new CorsConfiguration();
-        corsConfig.setAllowCredentials(true);
+
+        String firstEntry = corsConfigurationProperties.getOrigin().getFirst();
+        corsConfig.setAllowCredentials(corsConfigurationProperties.getOrigin().size() > 1 || !"*".equals(firstEntry));
         corsConfig.setAllowedOrigins(corsConfigurationProperties.getOrigin());
         corsConfig.setAllowedMethods(corsConfigurationProperties.getMethods());
         corsConfig.setAllowedHeaders(corsConfigurationProperties.getAllowheaders());

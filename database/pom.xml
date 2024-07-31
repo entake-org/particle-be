@@ -4,7 +4,7 @@
 
 	<artifactId>database</artifactId>
 	<packaging>jar</packaging>
-	<version>3.2.5</version>
+	<version>3.3.2</version>
 
 	<name>particle-database</name>
 	<description>Database Configurations for the Particle Framework.</description>
@@ -20,16 +20,16 @@
 	<developers>
 		<developer>
 			<name>Nick DiMola</name>
-			<email>nick@sdsolutions.io</email>
-			<organization>SD Solutions LLC</organization>
-			<organizationUrl>https://www.sdsolutions.io</organizationUrl>
+			<email>nick@entake.io</email>
+			<organization>Entake LLC</organization>
+			<organizationUrl>https://entake.io</organizationUrl>
 		</developer>
 	</developers>
 
 	<scm>
-		<connection>scm:git:https://github.com/sdsolutionsio/particle-database.git</connection>
-		<developerConnection>scm:git:ssh://github.com:sdsolutionsio/particle-database.git</developerConnection>
-		<url>https://github.com/sdsolutionsio/particle-database/tree/main</url>
+		<connection>scm:git:https://github.com/entake-org/particle-database.git</connection>
+		<developerConnection>scm:git:ssh://github.com:entake-org/particle-database.git</developerConnection>
+		<url>https://github.com/entake-org/particle-database/tree/main</url>
 	</scm>
 
 	<properties>
@@ -40,7 +40,7 @@
 	<parent>
 		<groupId>io.sdsolutions.particle</groupId>
 		<artifactId>dependencies</artifactId>
-		<version>3.2.5</version>
+		<version>3.3.2</version>
 	</parent>
 
 	<dependencies>

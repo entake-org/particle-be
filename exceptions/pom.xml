@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>exceptions</artifactId>
-	<version>3.2.5</version>
+	<version>3.3.2</version>
 	<packaging>jar</packaging>
 
 	<name>particle-exceptions</name>
 	<description>Exceptions and global error handling for the Particle Framework.</description>
-	<url>https://github.com/sdsolutionsio/particle-exceptions</url>
+	<url>https://github.com/entake-org/particle-exceptions</url>
 
 	<licenses>
 		<license>
@@ -20,16 +20,16 @@
 	<developers>
 		<developer>
 			<name>Nick DiMola</name>
-			<email>nick@sdsolutions.io</email>
-			<organization>SD Solutions LLC</organization>
-			<organizationUrl>https://www.sdsolutions.io</organizationUrl>
+			<email>nick@entake.io</email>
+			<organization>Entake LLC</organization>
+			<organizationUrl>https://entake.io</organizationUrl>
 		</developer>
 	</developers>
 
 	<scm>
-		<connection>scm:git:https://github.com/sdsolutionsio/particle-exceptions.git</connection>
-		<developerConnection>scm:git:ssh://github.com:sdsolutionsio/particle-exceptions.git</developerConnection>
-		<url>https://github.com/sdsolutionsio/particle-exceptions/tree/main</url>
+		<connection>scm:git:https://github.com/entake-org/particle-exceptions.git</connection>
+		<developerConnection>scm:git:ssh://github.com:entake-org/particle-exceptions.git</developerConnection>
+		<url>https://github.com/entake-org/particle-exceptions/tree/main</url>
 	</scm>
 
 	<properties>
@@ -40,7 +40,7 @@
 	<parent>
 		<groupId>io.sdsolutions.particle</groupId>
 		<artifactId>dependencies</artifactId>
-		<version>3.2.5</version>
+		<version>3.3.2</version>
 	</parent>
 
 	<dependencies>

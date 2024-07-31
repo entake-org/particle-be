@@ -8,6 +8,7 @@ import io.sdsolutions.particle.smartystreets.model.CoordinatesDTO;
 import io.sdsolutions.particle.smartystreets.services.AddressService;
 import io.sdsolutions.particle.smartystreets.services.SmartyStreetsCodeMap;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service("addressService")
+@ConditionalOnProperty(name = "smartystreets.enabled", havingValue = "true")
 public class AddressServiceImpl implements AddressService {
 
     private static final int MEAN_RADIUS_OF_EARTH_IN_MILES = 3959;

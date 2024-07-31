@@ -3,12 +3,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>audit</artifactId>
-	<version>3.2.5</version>
+	<version>3.3.2</version>
 	<packaging>jar</packaging>
 
 	<name>particle-audit</name>
 	<description>Audit Abstraction for Particle</description>
-	<url>https://github.com/sdsolutionsio/particle-audit</url>
+	<url>https://github.com/entake-org/particle-audit</url>
 
 	<licenses>
 		<license>
@@ -20,39 +20,36 @@
 	<developers>
 		<developer>
 			<name>Nick DiMola</name>
-			<email>nick@sdsolutions.io</email>
-			<organization>SD Solutions LLC</organization>
-			<organizationUrl>https://www.sdsolutions.io</organizationUrl>
+			<email>nick@entake.io</email>
+			<organization>Entake LLC</organization>
+			<organizationUrl>https://entake.io</organizationUrl>
 		</developer>
 	</developers>
 
 	<scm>
-		<connection>scm:git:https://github.com/sdsolutionsio/particle-audit.git</connection>
-		<developerConnection>scm:git:ssh://github.com:sdsolutionsio/particle-audit.git</developerConnection>
-		<url>https://github.com/sdsolutionsio/particle-audit/tree/main</url>
+		<connection>scm:git:https://github.com/entake-org/particle-audit.git</connection>
+		<developerConnection>scm:git:ssh://github.com:entake-org/particle-audit.git</developerConnection>
+		<url>https://github.com/entake-org/particle-audit/tree/main</url>
 	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>21</java.version>
-
-		<particle-security.version>3.2.5</particle-security.version>
 	</properties>
 
 	<parent>
 		<groupId>io.sdsolutions.particle</groupId>
 		<artifactId>dependencies</artifactId>
-		<version>3.2.5</version>
+		<version>3.3.2</version>
 	</parent>
 
 	<dependencies>
-		<dependency>
-			<groupId>io.sdsolutions.particle</groupId>
-			<artifactId>security</artifactId>
-			<version>${particle-security.version}</version>
-		</dependency>
-	
-		<dependency>
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
+        <dependency>
 			<groupId>org.aspectj</groupId>
 			<artifactId>aspectjweaver</artifactId>
 		</dependency>
@@ -76,6 +73,11 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
 		</dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+        </dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>

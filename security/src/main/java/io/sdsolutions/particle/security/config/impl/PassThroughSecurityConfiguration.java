@@ -5,6 +5,7 @@ import io.sdsolutions.particle.security.filter.AutoLoginFilter;
 import io.sdsolutions.particle.security.config.SecurityConfiguration;
 import io.sdsolutions.particle.security.filter.impl.PassThroughSecurityFilter;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
@@ -19,10 +20,10 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 public class PassThroughSecurityConfiguration extends SecurityConfiguration {
 
 	public PassThroughSecurityConfiguration(
-			UserDetailsService userDetailsService,
+            Environment environment,
 			CorsConfigurationProperties corsConfigurationProperties
 	) {
-		super(userDetailsService, corsConfigurationProperties);
+		super(environment, corsConfigurationProperties);
 	}
 
 	@Bean
