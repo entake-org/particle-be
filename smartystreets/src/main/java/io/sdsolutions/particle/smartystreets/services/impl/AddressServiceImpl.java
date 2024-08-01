@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service("addressService")
+@Service
 @ConditionalOnProperty(name = "smartystreets.enabled", havingValue = "true")
 public class AddressServiceImpl implements AddressService {
 

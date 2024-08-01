@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service("auditLogWriterService")
+@Service
 public class AuditLogWriterServiceImpl implements AuditLogWriterService {
 
     private static final String AUDIT_LOGGER_NAME = "AuditLogger";
