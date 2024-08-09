@@ -7,8 +7,8 @@
 	<version>3.3.2</version>
 
 	<name>particle-database</name>
-	<description>Database Configurations for the Particle Framework.</description>
-	<url>https://github.com/sdsolutionsio/particle-database</url>
+	<description>Database Configurations for the Particle Framework</description>
+	<url>https://github.com/entakeio/particle-database</url>
 
 	<licenses>
 		<license>
@@ -21,7 +21,7 @@
 		<developer>
 			<name>Nick DiMola</name>
 			<email>nick@entake.io</email>
-			<organization>Entake LLC</organization>
+			<organization>Entake</organization>
 			<organizationUrl>https://entake.io</organizationUrl>
 		</developer>
 	</developers>
@@ -38,7 +38,7 @@
 	</properties>
 
 	<parent>
-		<groupId>io.sdsolutions.particle</groupId>
+		<groupId>io.entake.particle</groupId>
 		<artifactId>dependencies</artifactId>
 		<version>3.3.2</version>
 	</parent>

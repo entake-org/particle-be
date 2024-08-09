@@ -7,7 +7,7 @@
     <packaging>pom</packaging>
 
     <name>particle-parent</name>
-    <description>Parent POM for the Particle Framework that includes all of its components.</description>
+    <description>Parent POM for the Particle Framework that includes all of its components</description>
     <url>https://github.com/entake-org/particle-parent</url>
 
     <licenses>
@@ -21,7 +21,7 @@
         <developer>
             <name>Nick DiMola</name>
             <email>nick@entake.io</email>
-            <organization>Entake LLC</organization>
+            <organization>Entake</organization>
             <organizationUrl>https://entake.io</organizationUrl>
         </developer>
     </developers>
@@ -46,7 +46,7 @@
     </properties>
 
     <parent>
-        <groupId>io.sdsolutions.particle</groupId>
+        <groupId>io.entake.particle</groupId>
         <artifactId>dependencies</artifactId>
         <version>3.3.2</version>
     </parent>
@@ -54,43 +54,43 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>io.sdsolutions.particle</groupId>
+                <groupId>io.entake.particle</groupId>
                 <artifactId>audit</artifactId>
                 <version>${particle-audit-version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.sdsolutions.particle</groupId>
+                <groupId>io.entake.particle</groupId>
                 <artifactId>exceptions</artifactId>
                 <version>${particle-exceptions-version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.sdsolutions.particle</groupId>
+                <groupId>io.entake.particle</groupId>
                 <artifactId>security</artifactId>
                 <version>${particle-security-version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.sdsolutions.particle</groupId>
+                <groupId>io.entake.particle</groupId>
                 <artifactId>core</artifactId>
                 <version>${particle-core-version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.sdsolutions.particle</groupId>
+                <groupId>io.entake.particle</groupId>
                 <artifactId>database</artifactId>
                 <version>${particle-database-version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.sdsolutions.particle</groupId>
+                <groupId>io.entake.particle</groupId>
                 <artifactId>aws</artifactId>
                 <version>${particle-aws-version}</version>
             </dependency>
 
             <dependency>
-                <groupId>io.sdsolutions.particle</groupId>
+                <groupId>io.entake.particle</groupId>
                 <artifactId>smartystreets</artifactId>
                 <version>${particle-smartystreets-version}</version>
             </dependency>

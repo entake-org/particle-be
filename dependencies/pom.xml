@@ -2,13 +2,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.sdsolutions.particle</groupId>
+    <groupId>io.entake.particle</groupId>
     <artifactId>dependencies</artifactId>
     <version>3.3.2</version>
     <packaging>pom</packaging>
 
     <name>particle-dependencies</name>
-	<description>Parent Dependency POM that extends Spring Boot for the Particle Framework.</description>
+	<description>Parent Dependency POM that extends Spring Boot for the Particle Framework</description>
 	<url>https://github.com/entake-org/particle-dependencies</url>
 
 	<licenses>
@@ -22,7 +22,7 @@
 		<developer>
             <name>Nick DiMola</name>
             <email>nick@entake.io</email>
-            <organization>Entake LLC</organization>
+            <organization>Entake</organization>
             <organizationUrl>https://entake.io</organizationUrl>
 		</developer>
 	</developers>
