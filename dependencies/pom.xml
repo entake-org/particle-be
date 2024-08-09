@@ -2,14 +2,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>io.sdsolutions.particle</groupId>
+    <groupId>io.entake.particle</groupId>
     <artifactId>dependencies</artifactId>
-    <version>3.2.5</version>
+    <version>3.3.2</version>
     <packaging>pom</packaging>
 
     <name>particle-dependencies</name>
-	<description>Parent Dependency POM that extends Spring Boot for the Particle Framework.</description>
-	<url>https://github.com/sdsolutionsio/particle-dependencies</url>
+	<description>Parent Dependency POM that extends Spring Boot for the Particle Framework</description>
+	<url>https://github.com/entake-org/particle-dependencies</url>
 
 	<licenses>
 		<license>
@@ -21,70 +21,52 @@
 	<developers>
 		<developer>
             <name>Nick DiMola</name>
-            <email>nick@sdsolutions.io</email>
-            <organization>SD Solutions LLC</organization>
-            <organizationUrl>https://www.sdsolutions.io</organizationUrl>
+            <email>nick@entake.io</email>
+            <organization>Entake</organization>
+            <organizationUrl>https://entake.io</organizationUrl>
 		</developer>
 	</developers>
 
 	<scm>
-		<connection>scm:git:https://github.com/sdsolutionsio/particle-dependencies.git</connection>
-		<developerConnection>scm:git:ssh://github.com:sdsolutionsio/particle-dependencies.git</developerConnection>
-		<url>https://github.com/sdsolutionsio/particle-dependencies/tree/main</url>
+		<connection>scm:git:https://github.com/entake-org/particle-dependencies.git</connection>
+		<developerConnection>scm:git:ssh://github.com:entake-org/particle-dependencies.git</developerConnection>
+		<url>https://github.com/entake-org/particle-dependencies/tree/main</url>
 	</scm>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>21</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
 
         <!-- Spring Boot Version -->
-        <spring-boot.version>3.2.5</spring-boot.version>
+        <spring-boot.version>3.3.2</spring-boot.version>
 
         <!-- Managed Dependency Versions -->
-        <spring-cloud.version>2023.0.1</spring-cloud.version>
-        <micrometer-registry-prometheus.version>1.12.4</micrometer-registry-prometheus.version>
-        <prometheus.version>0.16.0</prometheus.version>
-        <nimbus-jose-jwt.version>9.37.3</nimbus-jose-jwt.version>
-        <smartystreets.version>3.16.3</smartystreets.version>
-        <dynamodb.version>1.12.688</dynamodb.version>
-        <apache-poi.version>5.2.5</apache-poi.version>
-        <jooq.version>3.19.6</jooq.version>
-        <commons-fileupload-version>1.5</commons-fileupload-version>
-        <ehcache-version>3.10.8</ehcache-version>
-        <commons-lang3-version>3.14.0</commons-lang3-version>
-        <commons-io-version>2.15.1</commons-io-version>
-        <commons-beanutils-version>1.9.4</commons-beanutils-version>
-        <logstash-logback-version>7.4</logstash-logback-version>
-        <hamcrest-all-version>1.3</hamcrest-all-version>
-        <modelmapper.version>3.2.0</modelmapper.version>
+        <nimbus-jose-jwt.version>9.40</nimbus-jose-jwt.version>
+        <smartystreets.version>3.17.5</smartystreets.version>
+        <dynamodb.version>1.12.765</dynamodb.version>
+        <apache-poi.version>5.3.0</apache-poi.version>
+        <jooq.version>3.19.10</jooq.version>
+        <commons-io-version>2.16.1</commons-io-version>
+        <commons-lang3-version>3.15.0</commons-lang3-version>
+        <modelmapper.version>3.2.1</modelmapper.version>
+        <kotlin-reflect.version>2.0.0</kotlin-reflect.version>
+        <webp-imageio.version>0.1.6</webp-imageio.version>
+        <json-flattener.version>0.16.6</json-flattener.version>
+        <s3-wagon.version>1.3.3</s3-wagon.version>
+        <jacoco.version>0.8.12</jacoco.version>
+        <clamav-client.version>1.0.1</clamav-client.version>
     </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.5</version>
+        <version>3.3.2</version>
     </parent>
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-dependencies</artifactId>
-                <version>${spring-cloud.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.micrometer</groupId>
-                <artifactId>micrometer-registry-prometheus</artifactId>
-                <version>${micrometer-registry-prometheus.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>io.prometheus</groupId>
-                <artifactId>simpleclient</artifactId>
-                <version>${prometheus.version}</version>
-            </dependency>
-
             <dependency>
                 <groupId>com.nimbusds</groupId>
                 <artifactId>nimbus-jose-jwt</artifactId>
@@ -122,33 +104,9 @@
             </dependency>
 
             <dependency>
-                <groupId>commons-fileupload</groupId>
-                <artifactId>commons-fileupload</artifactId>
-                <version>${commons-fileupload-version}</version>
-            </dependency>
-
-            <dependency>
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons-io-version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-beanutils</groupId>
-                <artifactId>commons-beanutils</artifactId>
-                <version>${commons-beanutils-version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.modelmapper</groupId>
-                <artifactId>modelmapper</artifactId>
-                <version>${modelmapper.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>org.ehcache</groupId>
-                <artifactId>ehcache</artifactId>
-                <version>${ehcache-version}</version>
             </dependency>
 
             <dependency>
@@ -158,15 +116,51 @@
             </dependency>
 
             <dependency>
-                <groupId>net.logstash.logback</groupId>
-                <artifactId>logstash-logback-encoder</artifactId>
-                <version>${logstash-logback-version}</version>
+                <groupId>org.modelmapper</groupId>
+                <artifactId>modelmapper</artifactId>
+                <version>${modelmapper.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>org.hamcrest</groupId>
-                <artifactId>hamcrest-all</artifactId>
-                <version>${hamcrest-all-version}</version>
+                <groupId>org.sejda.imageio</groupId>
+                <artifactId>webp-imageio</artifactId>
+                <version>${webp-imageio.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jetbrains.kotlin</groupId>
+                <artifactId>kotlin-reflect</artifactId>
+                <version>${kotlin-reflect.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.wnameless.json</groupId>
+                <artifactId>json-flattener</artifactId>
+                <version>${json-flattener.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.seahen</groupId>
+                <artifactId>maven-s3-wagon</artifactId>
+                <version>${s3-wagon.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jooq</groupId>
+                <artifactId>jooq-meta-extensions-liquibase</artifactId>
+                <version>${jooq.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${jacoco.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>fi.solita.clamav</groupId>
+                <artifactId>clamav-client</artifactId>
+                <version>${clamav-client.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -189,15 +183,13 @@
 				</executions>
 			</plugin>
             <plugin>
-                <inherited>false</inherited>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>1.6.13</version>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.5.0</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <serverId>ossrh</serverId>
-                    <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-                    <autoReleaseAfterClose>true</autoReleaseAfterClose>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
                 </configuration>
             </plugin>
 		</plugins>

@@ -4,3 +4,4 @@ target/
 components.iml
 .project
 .classpath
+*.bat

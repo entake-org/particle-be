@@ -4,11 +4,11 @@
 
 	<artifactId>database</artifactId>
 	<packaging>jar</packaging>
-	<version>3.2.5</version>
+	<version>3.3.2</version>
 
 	<name>particle-database</name>
-	<description>Database Configurations for the Particle Framework.</description>
-	<url>https://github.com/sdsolutionsio/particle-database</url>
+	<description>Database Configurations for the Particle Framework</description>
+	<url>https://github.com/entakeio/particle-database</url>
 
 	<licenses>
 		<license>
@@ -20,27 +20,29 @@
 	<developers>
 		<developer>
 			<name>Nick DiMola</name>
-			<email>nick@sdsolutions.io</email>
-			<organization>SD Solutions LLC</organization>
-			<organizationUrl>https://www.sdsolutions.io</organizationUrl>
+			<email>nick@entake.io</email>
+			<organization>Entake</organization>
+			<organizationUrl>https://entake.io</organizationUrl>
 		</developer>
 	</developers>
 
 	<scm>
-		<connection>scm:git:https://github.com/sdsolutionsio/particle-database.git</connection>
-		<developerConnection>scm:git:ssh://github.com:sdsolutionsio/particle-database.git</developerConnection>
-		<url>https://github.com/sdsolutionsio/particle-database/tree/main</url>
+		<connection>scm:git:https://github.com/entake-org/particle-database.git</connection>
+		<developerConnection>scm:git:ssh://github.com:entake-org/particle-database.git</developerConnection>
+		<url>https://github.com/entake-org/particle-database/tree/main</url>
 	</scm>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>21</java.version>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
 	</properties>
 
 	<parent>
-		<groupId>io.sdsolutions.particle</groupId>
+		<groupId>io.entake.particle</groupId>
 		<artifactId>dependencies</artifactId>
-		<version>3.2.5</version>
+		<version>3.3.2</version>
 	</parent>
 
 	<dependencies>
@@ -128,17 +130,16 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.sonatype.plugins</groupId>
-				<artifactId>nexus-staging-maven-plugin</artifactId>
-				<version>1.6.13</version>
-				<extensions>true</extensions>
-				<configuration>
-					<serverId>ossrh</serverId>
-					<nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
-					<autoReleaseAfterClose>true</autoReleaseAfterClose>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.sonatype.central</groupId>
+                <artifactId>central-publishing-maven-plugin</artifactId>
+                <version>0.5.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <publishingServerId>central</publishingServerId>
+                    <autoPublish>true</autoPublish>
+                </configuration>
+            </plugin>
 		</plugins>
 	</build>
 

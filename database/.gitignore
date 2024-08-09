@@ -4,3 +4,4 @@ target/
 database.iml
 .project
 .classpath
+*.bat
