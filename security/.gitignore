@@ -4,3 +4,4 @@ target/
 security.iml
 .classpath
 .project
+*.bat
