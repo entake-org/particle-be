@@ -4,7 +4,7 @@
 
     <groupId>io.entake.particle</groupId>
     <artifactId>dependencies</artifactId>
-    <version>3.3.2</version>
+    <version>3.4.2</version>
     <packaging>pom</packaging>
 
     <name>particle-dependencies</name>
@@ -40,20 +40,20 @@
         <maven.compiler.target>21</maven.compiler.target>
 
         <!-- Spring Boot Version -->
-        <spring-boot.version>3.3.2</spring-boot.version>
+        <spring-boot.version>3.4.2</spring-boot.version>
 
         <!-- Managed Dependency Versions -->
-        <nimbus-jose-jwt.version>9.40</nimbus-jose-jwt.version>
-        <smartystreets.version>3.17.5</smartystreets.version>
+        <nimbus-jose-jwt.version>10.0.1</nimbus-jose-jwt.version>
+        <smartystreets.version>3.18.3</smartystreets.version>
         <dynamodb.version>1.12.765</dynamodb.version>
-        <apache-poi.version>5.3.0</apache-poi.version>
-        <jooq.version>3.19.10</jooq.version>
-        <commons-io-version>2.16.1</commons-io-version>
-        <commons-lang3-version>3.15.0</commons-lang3-version>
-        <modelmapper.version>3.2.1</modelmapper.version>
-        <kotlin-reflect.version>2.0.0</kotlin-reflect.version>
+        <apache-poi.version>5.4.0</apache-poi.version>
+        <jooq.version>3.19.18</jooq.version>
+        <commons-io-version>2.18.0</commons-io-version>
+        <commons-lang3-version>3.17.0</commons-lang3-version>
+        <modelmapper.version>3.2.2</modelmapper.version>
+        <kotlin-reflect.version>2.1.10</kotlin-reflect.version>
         <webp-imageio.version>0.1.6</webp-imageio.version>
-        <json-flattener.version>0.16.6</json-flattener.version>
+        <json-flattener.version>0.17.1</json-flattener.version>
         <s3-wagon.version>1.3.3</s3-wagon.version>
         <jacoco.version>0.8.12</jacoco.version>
         <clamav-client.version>1.0.1</clamav-client.version>
@@ -62,7 +62,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.3.2</version>
+        <version>3.4.2</version>
     </parent>
 
     <dependencyManagement>

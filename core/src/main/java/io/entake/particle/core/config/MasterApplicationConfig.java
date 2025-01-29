@@ -78,26 +78,26 @@ public class MasterApplicationConfig implements WebMvcConfigurer {
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 
-        DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'");
+        DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(getDateFormat());
         SimpleModule simpleModule = new SimpleModule();
-        simpleModule.addSerializer(OffsetDateTime.class, new JsonSerializer<>() {
+        simpleModule.addSerializer(LocalDateTime.class, new JsonSerializer<>() {
             @Override
-            public void serialize(OffsetDateTime value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+            public void serialize(LocalDateTime value, JsonGenerator gen, SerializerProvider serializers) throws IOException {
                 gen.writeString(FORMATTER.format(value));
             }
         });
 
-        simpleModule.addDeserializer(OffsetDateTime.class, new JsonDeserializer<>() {
+        simpleModule.addDeserializer(LocalDateTime.class, new JsonDeserializer<>() {
             @Override
-            public OffsetDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
+            public LocalDateTime deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
                 if (StringUtils.isBlank(p.getText())) {
                     return null;
                 }
 
                 if (NumberUtils.isCreatable(p.getText())) {
-                    return OffsetDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(p.getText())), ZoneOffset.UTC);
+                    return OffsetDateTime.ofInstant(Instant.ofEpochMilli(Long.parseLong(p.getText())), ZoneOffset.UTC).toLocalDateTime();
                 } else {
-                    return ZonedDateTime.parse(p.getText()).withZoneSameInstant(ZoneId.of("UTC")).toOffsetDateTime();
+                    return ZonedDateTime.parse(p.getText()).withZoneSameInstant(ZoneId.of("UTC")).toLocalDateTime();
                 }
             }
         });
@@ -133,6 +133,10 @@ public class MasterApplicationConfig implements WebMvcConfigurer {
 
     protected List<HandlerInterceptor> getInterceptors() {
         return new ArrayList<>();
+    }
+
+    protected String getDateFormat() {
+        return "yyyy-MM-dd'T'HH:mm:ss'Z'";
     }
 
 }

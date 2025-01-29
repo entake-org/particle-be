@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<artifactId>audit</artifactId>
-	<version>3.3.2</version>
+	<version>3.4.2</version>
 	<packaging>jar</packaging>
 
 	<name>particle-audit</name>
@@ -42,7 +42,7 @@
 	<parent>
 		<groupId>io.entake.particle</groupId>
 		<artifactId>dependencies</artifactId>
-		<version>3.3.2</version>
+		<version>3.4.2</version>
 	</parent>
 
 	<dependencies>
