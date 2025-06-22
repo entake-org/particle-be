@@ -4,7 +4,7 @@
 
 	<artifactId>database</artifactId>
 	<packaging>jar</packaging>
-	<version>3.4.2</version>
+	<version>3.5.3</version>
 
 	<name>particle-database</name>
 	<description>Database Configurations for the Particle Framework</description>
@@ -42,7 +42,7 @@
 	<parent>
 		<groupId>io.entake.particle</groupId>
 		<artifactId>dependencies</artifactId>
-		<version>3.4.2</version>
+		<version>3.5.3</version>
 	</parent>
 
 	<dependencies>

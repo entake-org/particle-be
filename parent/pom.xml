@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>parent</artifactId>
-    <version>3.4.2</version>
+    <version>3.5.3</version>
     <packaging>pom</packaging>
 
     <name>particle-parent</name>
@@ -38,19 +38,19 @@
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>
 
-        <particle-audit-version>3.4.2</particle-audit-version>
-        <particle-aws-version>3.4.2</particle-aws-version>
-        <particle-core-version>3.4.2</particle-core-version>
-        <particle-database-version>3.4.2</particle-database-version>
-        <particle-exceptions-version>3.4.2</particle-exceptions-version>
-        <particle-security-version>3.4.2</particle-security-version>
-        <particle-smartystreets-version>3.4.2</particle-smartystreets-version>
+        <particle-audit-version>3.5.3</particle-audit-version>
+        <particle-aws-version>3.5.3</particle-aws-version>
+        <particle-core-version>3.5.3</particle-core-version>
+        <particle-database-version>3.5.3</particle-database-version>
+        <particle-exceptions-version>3.5.3</particle-exceptions-version>
+        <particle-security-version>3.5.3</particle-security-version>
+        <particle-smartystreets-version>3.5.3</particle-smartystreets-version>
     </properties>
 
     <parent>
         <groupId>io.entake.particle</groupId>
         <artifactId>dependencies</artifactId>
-        <version>3.4.2</version>
+        <version>3.5.3</version>
     </parent>
 
     <dependencyManagement>
