@@ -5,7 +5,6 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.*;
 import io.entake.particle.aws.services.AmazonS3Service;
 import org.apache.commons.io.IOUtils;
-import org.springframework.core.env.Environment;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -14,21 +13,18 @@ import java.io.IOException;
 
 public class AmazonS3ServiceImpl implements AmazonS3Service {
 
-    private Environment environment;
+    private final AmazonS3 s3Client;
 
-    private AmazonS3 s3Client;
-
-    public AmazonS3ServiceImpl(Environment environment, AmazonS3 s3Client) {
-        this.environment = environment;
+    public AmazonS3ServiceImpl(AmazonS3 s3Client) {
         this.s3Client = s3Client;
     }
 
     @Override
-    public byte[] getDocumentFromS3(String documentKey) throws IOException {
+    public byte[] getDocumentFromS3(String bucket, String documentKey) throws IOException {
         S3Object fullObject = null;
         try {
             // Get an object and print its contents.
-            fullObject = s3Client.getObject(new GetObjectRequest(environment.getRequiredProperty("aws.s3.bucket.name"), documentKey));
+            fullObject = s3Client.getObject(new GetObjectRequest(bucket, documentKey));
             return IOUtils.toByteArray(fullObject.getObjectContent());
         } catch (AmazonServiceException e) {
             // The call was transmitted successfully, but Amazon S3 couldn't process it, so it returned an error response.
@@ -42,12 +38,12 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
     }
 
     @Override
-    public void uploadDocumentToS3(MultipartFile file, String documentKey, boolean isPublic) throws IOException {
+    public void uploadDocumentToS3(MultipartFile file, String bucket, String documentKey, boolean isPublic) throws IOException {
         File localFile = null;
         try {
             // Upload a file as a new object with ContentType and title specified.
             localFile = toFile(file);
-            PutObjectRequest request = new PutObjectRequest(environment.getRequiredProperty("aws.s3.bucket.name"), documentKey, localFile);
+            PutObjectRequest request = new PutObjectRequest(bucket, documentKey, localFile);
             ObjectMetadata metadata = new ObjectMetadata();
             metadata.setContentType(file.getContentType());
             request.setMetadata(metadata);
@@ -68,8 +64,8 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
     }
 
     @Override
-    public void deleteDocumentFromS3(String documentKey) {
-        s3Client.deleteObject(new DeleteObjectRequest(environment.getRequiredProperty("aws.s3.bucket.name"), documentKey));
+    public void deleteDocumentFromS3(String bucket, String documentKey) {
+        s3Client.deleteObject(new DeleteObjectRequest(bucket, documentKey));
     }
 
 
