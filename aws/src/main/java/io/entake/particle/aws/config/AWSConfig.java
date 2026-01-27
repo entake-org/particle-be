@@ -35,8 +35,8 @@ public class AWSConfig {
 
     @Bean
     @ConditionalOnProperty(name = "aws.s3.enabled", havingValue = "true")
-    public AmazonS3Service amazonS3Service(Environment environment, AmazonS3 amazonS3) {
-        return new AmazonS3ServiceImpl(environment, amazonS3);
+    public AmazonS3Service amazonS3Service(AmazonS3 amazonS3) {
+        return new AmazonS3ServiceImpl(amazonS3);
     }
 
     @Bean
