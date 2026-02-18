@@ -1,11 +1,7 @@
 package io.entake.particle.aws.config;
 
-import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
-import com.amazonaws.services.s3.AmazonS3;
-import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
-import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
 import io.entake.particle.aws.services.AmazonS3Service;
 import io.entake.particle.aws.services.impl.AmazonS3ServiceImpl;
 import org.slf4j.Logger;
@@ -26,29 +22,16 @@ public class AWSConfig {
 
     @Bean
     @ConditionalOnProperty(name = "aws.s3.enabled", havingValue = "true")
-    public AmazonS3 amazonS3() {
-        return AmazonS3ClientBuilder.standard()
-                .withRegion(environment.getProperty("aws.s3.bucket.region"))
-                .withCredentials(DefaultAWSCredentialsProviderChain.getInstance())
+    public S3Client s3Client() {
+        return S3Client.builder()
+                .region(Region.of(environment.getRequiredProperty("aws.s3.bucket.region")))
                 .build();
     }
 
     @Bean
     @ConditionalOnProperty(name = "aws.s3.enabled", havingValue = "true")
-    public AmazonS3Service amazonS3Service(AmazonS3 amazonS3) {
-        return new AmazonS3ServiceImpl(amazonS3);
-    }
-
-    @Bean
-    @ConditionalOnProperty(name = "aws.dynamodb.enabled", havingValue = "true")
-    public AmazonDynamoDB amazonDynamoDbClient() {
-        return AmazonDynamoDBClientBuilder.defaultClient();
-    }
-
-    @Bean
-    @ConditionalOnProperty(name = "aws.dynamodb.enabled", havingValue = "true")
-    public DynamoDB dynamoDb(AmazonDynamoDB amazonDynamoDBClient) {
-        return new DynamoDB(amazonDynamoDBClient);
+    public AmazonS3Service amazonS3Service(S3Client s3Client) {
+        return new AmazonS3ServiceImpl(s3Client);
     }
 
 }

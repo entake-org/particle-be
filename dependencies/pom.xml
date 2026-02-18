@@ -44,8 +44,9 @@
 
         <!-- Managed Dependency Versions -->
         <nimbus-jose-jwt.version>10.7</nimbus-jose-jwt.version>
-        <smartystreets.version>3.18.3</smartystreets.version><!-- Major Version Upgrade -->
-        <dynamodb.version>1.12.765</dynamodb.version><!-- Moved/Major Version Upgrade -->
+        <smartystreets.version>5.2.0</smartystreets.version>
+        <dynamodb.version>2.41.31</dynamodb.version>
+        <aws-s3.version>2.17.156</aws-s3.version>
         <apache-poi.version>5.5.1</apache-poi.version>
         <jooq.version>3.20.10</jooq.version>
         <commons-io-version>2.21.0</commons-io-version>
@@ -81,9 +82,15 @@
 			</dependency>
 
             <dependency>
-                <groupId>com.amazonaws</groupId>
-                <artifactId>aws-java-sdk-dynamodb</artifactId>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>dynamodb</artifactId>
                 <version>${dynamodb.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>software.amazon.awssdk</groupId>
+                <artifactId>s3</artifactId>
+                <version>${aws-s3.version}</version>
             </dependency>
 
             <dependency>
