@@ -1,9 +1,7 @@
 package io.entake.particle.core.config;
 
-
-import jakarta.servlet.MultipartConfigElement;
-
 import io.entake.particle.core.interceptor.JsonHijackingInterceptor;
+import jakarta.servlet.MultipartConfigElement;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.modelmapper.Converter;
@@ -22,9 +20,9 @@ import tools.jackson.core.JacksonException;
 import tools.jackson.core.JsonGenerator;
 import tools.jackson.core.JsonParser;
 import tools.jackson.databind.*;
+import tools.jackson.databind.json.JsonMapper;
 import tools.jackson.databind.module.SimpleModule;
 
-import java.io.IOException;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -66,14 +64,12 @@ public class MasterApplicationConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public JacksonJsonHttpMessageConverter mappingJackson2HttpMessageConverter() {
-        return new JacksonJsonHttpMessageConverter();
+    public JacksonJsonHttpMessageConverter mappingJackson2HttpMessageConverter(JsonMapper jsonMapper) {
+        return new JacksonJsonHttpMessageConverter(jsonMapper);
     }
 
     @Bean
-    public ObjectMapper objectMapper() {
-        ObjectMapper objectMapper = new ObjectMapper();
-
+    public JsonMapper objectMapper() {
         DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern(getDateFormat());
         SimpleModule simpleModule = new SimpleModule();
         simpleModule.addSerializer(LocalDateTime.class, new ValueSerializer<>() {
@@ -98,9 +94,10 @@ public class MasterApplicationConfig implements WebMvcConfigurer {
             }
         });
 
-        objectMapper.registeredModules().add(simpleModule);
-
-        return objectMapper;
+        return JsonMapper.builder()
+                .addModule(simpleModule)
+                .configure(DeserializationFeature.FAIL_ON_NULL_FOR_PRIMITIVES, false)
+                .build();
     }
 
     @Bean

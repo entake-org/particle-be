@@ -134,7 +134,7 @@ public class OAuth2AutoLoginFilter extends AutoLoginFilter {
     private String getToken(HttpServletRequest request) throws IOException {
         String authorizationHeader = request.getHeader("Authorization");
         if (StringUtils.isBlank(authorizationHeader)) {
-            throw new IOException();
+            throw new IOException("No Authorization header found!");
         }
 
         return authorizationHeader.replace("Bearer ", "");
