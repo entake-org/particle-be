@@ -110,7 +110,7 @@ public class OAuth2AutoLoginFilter extends AutoLoginFilter {
             throw new IOException(String.format("Issuer (%s) in JWT token doesn't match IDP", claimsSet.getIssuer()));
         }
 
-        String username = claimsSet.getClaims().get(environment.getRequiredProperty("security.oauth2.userclaim")).toString();
+        String username = claimsSet.getClaims().get("sub").toString();
 
         if (username != null) {
             List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
