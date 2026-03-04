@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>smartystreets</artifactId>
-    <version>3.5.3</version>
+    <version>4.0.0</version>
     <packaging>jar</packaging>
 
     <name>particle-smartystreets</name>
@@ -34,15 +34,15 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <java.version>21</java.version>
-        <maven.compiler.source>21</maven.compiler.source>
-        <maven.compiler.target>21</maven.compiler.target>
+        <java.version>25</java.version>
+        <maven.compiler.source>25</maven.compiler.source>
+        <maven.compiler.target>25</maven.compiler.target>
     </properties>
 
     <parent>
         <groupId>io.entake.particle</groupId>
         <artifactId>dependencies</artifactId>
-        <version>3.5.3</version>
+        <version>4.0.0</version>
     </parent>
 
     <dependencies>
@@ -137,7 +137,7 @@
             <plugin>
                 <groupId>org.sonatype.central</groupId>
                 <artifactId>central-publishing-maven-plugin</artifactId>
-                <version>0.7.0</version>
+                <version>0.9.0</version>
                 <extensions>true</extensions>
                 <configuration>
                     <publishingServerId>central</publishingServerId>

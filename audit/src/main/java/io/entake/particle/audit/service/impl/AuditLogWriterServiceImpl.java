@@ -1,12 +1,11 @@
 package io.entake.particle.audit.service.impl;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.entake.particle.audit.model.AuditEventDTO;
 import io.entake.particle.audit.service.AuditLogWriterService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import tools.jackson.databind.ObjectMapper;
 
 import java.util.List;
 
@@ -18,7 +17,7 @@ public class AuditLogWriterServiceImpl implements AuditLogWriterService {
     private static final Logger LOGGER = LoggerFactory.getLogger(AuditLogWriterServiceImpl.class);
     private static final Logger AUDIT_LOGGER = LoggerFactory.getLogger(AUDIT_LOGGER_NAME);
 
-    private final ObjectMapper objectMapper;
+    private final tools.jackson.databind.ObjectMapper objectMapper;
 
     public AuditLogWriterServiceImpl(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
@@ -27,12 +26,8 @@ public class AuditLogWriterServiceImpl implements AuditLogWriterService {
     @Override
     public void writeAuditLogs(List<AuditEventDTO> events) {
         for (AuditEventDTO event : events) {
-            try {
-                String eventLog = objectMapper.writeValueAsString(event);
-                AUDIT_LOGGER.info(eventLog);
-            } catch (JsonProcessingException e) {
-                LOGGER.error("Failure in converting JSON", e);
-            }
+            String eventLog = objectMapper.writeValueAsString(event);
+            AUDIT_LOGGER.info(eventLog);
         }
 
         LOGGER.info("Audit Logs Recorded.");

@@ -1,9 +1,7 @@
 package io.entake.particle.exceptions.handler;
 
-import com.fasterxml.jackson.databind.JsonMappingException;
 import io.entake.particle.exceptions.*;
 import io.entake.particle.exceptions.model.JsonResponseDTO;
-import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -14,19 +12,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.context.request.RequestAttributes;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;
 import org.springframework.web.util.WebUtils;
+import tools.jackson.databind.DatabindException;
 
 import javax.xml.datatype.DatatypeConfigurationException;
 
@@ -128,7 +123,7 @@ public class GlobalRestExceptionHandler extends DefaultHandlerExceptionResolver 
 	 */
 	@ExceptionHandler(value = { HttpMessageNotReadableException.class })
 	protected ResponseEntity<Object> handleHttpMessageNotReadableException(RuntimeException e, WebRequest request, HttpServletResponse response) {
-		if (e.getCause() instanceof JsonMappingException) {
+		if (e.getCause() instanceof DatabindException) {
 			return handleException(new RuntimeException(NONCOMPLIANT_JSON, e), HttpStatus.UNSUPPORTED_MEDIA_TYPE, request, response);
 		} else {
 			return handleException(e, HttpStatus.INTERNAL_SERVER_ERROR, request, response);
@@ -156,7 +151,7 @@ public class GlobalRestExceptionHandler extends DefaultHandlerExceptionResolver 
 			default -> LOGGER.debug(e.getMessage(), e);
 		}
 
-		return new ResponseEntity<>(getResponseDto(message, status), getHeaders(), status);
+		return new ResponseEntity<>(getResponseDto(message, status), getHeaders(request), status);
 	}
 
 	/**
@@ -200,18 +195,12 @@ public class GlobalRestExceptionHandler extends DefaultHandlerExceptionResolver 
 	 * @return a MultiValueMap containing the allow origin header, or empty if the current request attributes
 	 * do not exist
 	 */
-	private MultiValueMap<String, String> getHeaders() {
-		MultiValueMap<String, String> headers = new LinkedMultiValueMap<>();
-		ServletRequestAttributes requestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
-
-		if (requestAttributes != null) {
-			HttpServletRequest request = requestAttributes.getRequest();
-			headers.add(
-					HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN,
-					request.getHeader(HttpHeaders.ORIGIN)
-			);
-		}
-
+	private HttpHeaders getHeaders(WebRequest request) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.add(
+                HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN,
+                request.getHeader(HttpHeaders.ORIGIN)
+        );
 		return headers;
 	}
 }

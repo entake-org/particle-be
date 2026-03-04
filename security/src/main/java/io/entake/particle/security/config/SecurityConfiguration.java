@@ -9,11 +9,13 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.*;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetailsByNameServiceWrapper;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationToken;
@@ -67,26 +69,15 @@ public class SecurityConfiguration {
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http, AuthenticationProvider authenticationProvider, AutoLoginFilter autoLoginFilter) throws Exception {
-		http.authenticationProvider(authenticationProvider).authorizeHttpRequests(
-		authorize -> authorize
-				.requestMatchers(
-					getPublicUrlPatterns()
-				).permitAll()
-                .requestMatchers(
-                    HttpMethod.OPTIONS, "/**"
-                ).permitAll()
-				.requestMatchers(
-					getAuthenticatedUrlPatterns()
-				).fullyAuthenticated()
-		);
-
-		http.sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
-
-		http.csrf(AbstractHttpConfigurer::disable);
-
-		http.cors(Customizer.withDefaults());
-
-		http.addFilterAfter(autoLoginFilter, SecurityContextHolderFilter.class);
+        http.authenticationProvider(authenticationProvider)
+                .authorizeHttpRequests(authorize ->
+                        authorize.requestMatchers(getPublicUrlPatterns()).permitAll()
+                                .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+                                .requestMatchers(getAuthenticatedUrlPatterns()).fullyAuthenticated())
+                .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
+                .addFilterAfter(autoLoginFilter, SecurityContextHolderFilter.class);
 
 		configureFilterChain(http);
 
@@ -113,10 +104,8 @@ public class SecurityConfiguration {
 	}
 
 	@Bean
-	public AuthenticationManager authManager(HttpSecurity http) throws Exception {
-		return http.getSharedObject(AuthenticationManagerBuilder.class)
-				.userDetailsService(userDetailsService)
-                .and().build();
+	public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) {
+		return configuration.getAuthenticationManager();
 	}
 
     protected String[] getPublicUrlPatterns() {
