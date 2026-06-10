@@ -2,6 +2,7 @@ package io.entake.particle.database.config;
 
 import javax.sql.DataSource;
 
+import org.jooq.SQLDialect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Bean;
@@ -50,10 +51,10 @@ public class MasterDatabaseConfiguration {
 			LOGGER.info("JNDI Data Source Not Found, Using Embedded HikariCP.");
 
 			HikariConfig hikariConfig = new HikariConfig();
-			hikariConfig.setDriverClassName(environment.getRequiredProperty("spring.datasource.driverClassName"));
 			hikariConfig.setJdbcUrl(environment.getRequiredProperty("spring.datasource.url"));
 			hikariConfig.setUsername(environment.getRequiredProperty("spring.datasource.username"));
 			hikariConfig.setPassword(environment.getRequiredProperty("spring.datasource.password"));
+			hikariConfig.setDriverClassName(getDbDriver(environment, hikariConfig.getJdbcUrl()));
 
 			hikariConfig.setMaximumPoolSize(environment.getRequiredProperty("spring.datasource.maximumPoolSize", Integer.class));
 			hikariConfig.setConnectionTestQuery(environment.getRequiredProperty("spring.datasource.connectionTestQuery"));
@@ -68,6 +69,28 @@ public class MasterDatabaseConfiguration {
 		}
 
 		return dataSource;
+	}
+
+	private String getDbDriver(Environment environment, String datasourceUrl) {
+		String driverClassOverride = environment.getProperty("spring.datasource.driverClassName");
+		if (driverClassOverride != null) {
+			return driverClassOverride;
+		}
+
+		String dbType = datasourceUrl.substring(5);
+		dbType = dbType.substring(0, dbType.indexOf(":"));
+
+		if("postgresql".equalsIgnoreCase(dbType)) {
+			return "org.postgresql.Driver";
+		} else if("mariadb".equalsIgnoreCase(dbType)) {
+			return "org.mariadb.jdbc.Driver";
+		} else if("mysql".equalsIgnoreCase(dbType)) {
+			return "com.mysql.cj.jdbc.Driver";
+		} else if ("h2".equalsIgnoreCase(dbType)) {
+			return "org.h2.Driver";
+		}
+
+		throw new RuntimeException(String.format("Database %s is not supported!", dbType));
 	}
 
 	@Bean

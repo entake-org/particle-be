@@ -8,7 +8,7 @@ public interface AmazonS3Service {
 
     byte[] getDocumentFromS3(String bucket, String documentKey) throws IOException;
 
-    void uploadDocumentToS3(MultipartFile file, String bucket, String documentKey, boolean isPublic) throws IOException;
+    void uploadDocumentToS3(MultipartFile file, String bucket, String documentKey) throws IOException;
 
     void deleteDocumentFromS3(String bucket, String documentKey);
 }

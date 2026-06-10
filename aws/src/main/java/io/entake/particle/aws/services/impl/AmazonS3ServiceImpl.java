@@ -32,17 +32,18 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
     }
 
     @Override
-    public void uploadDocumentToS3(MultipartFile file, String bucket, String documentKey, boolean isPublic) throws IOException {
+    public void uploadDocumentToS3(MultipartFile file, String bucket, String documentKey) throws IOException {
         try {
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(bucket)
                     .key(documentKey)
                     .contentType(file.getContentType())
-                    .acl(isPublic ? BucketCannedACL.PUBLIC_READ.toString() : null)
                     .build();
 
             // Upload a file as a new object with ContentType and title specified.
-            s3Client.putObject(putObjectRequest, RequestBody.fromFile(toFile(file)));
+            File newFile = toFile(file);
+            s3Client.putObject(putObjectRequest, RequestBody.fromFile(newFile));
+            newFile.delete();
         } catch (S3Exception e) {
             // The call was transmitted successfully, but Amazon S3 couldn't process it, so it returned an error response.
             throw new IOException(e);
@@ -55,7 +56,7 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
     }
 
 
-    private File toFile(MultipartFile multipartFile) throws IOException {
+    protected File toFile(MultipartFile multipartFile) throws IOException {
         if (multipartFile != null && multipartFile.getOriginalFilename() != null) {
             File convFile = new File(multipartFile.getOriginalFilename());
             convFile.createNewFile();
