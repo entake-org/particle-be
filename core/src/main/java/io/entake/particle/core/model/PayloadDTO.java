@@ -9,11 +9,6 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class IdDTO {
-	private String id;
-	
-	public IdDTO(Integer id) {
-		this.id = id + "";
-	}
-	
+public class PayloadDTO {
+    private String payload;
 }

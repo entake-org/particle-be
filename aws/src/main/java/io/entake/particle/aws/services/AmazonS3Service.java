@@ -10,5 +10,7 @@ public interface AmazonS3Service {
 
     void uploadDocumentToS3(MultipartFile file, String bucket, String documentKey) throws IOException;
 
+    void uploadDocumentToS3WithAcls(MultipartFile file, String bucket, String documentKey, boolean isPublic) throws IOException;
+
     void deleteDocumentFromS3(String bucket, String documentKey);
 }

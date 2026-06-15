@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>smartystreets</artifactId>
-    <version>4.0.6</version>
+    <version>4.1.0</version>
     <packaging>jar</packaging>
 
     <name>particle-smartystreets</name>
@@ -42,7 +42,7 @@
     <parent>
         <groupId>io.entake.particle</groupId>
         <artifactId>dependencies</artifactId>
-        <version>4.0.6</version>
+        <version>4.1.0</version>
     </parent>
 
     <dependencies>
