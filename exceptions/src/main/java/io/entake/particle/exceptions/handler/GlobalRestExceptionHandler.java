@@ -141,17 +141,26 @@ public class GlobalRestExceptionHandler extends DefaultHandlerExceptionResolver 
 	 * @return ResponseEntity
 	 */
 	private ResponseEntity<Object> handleException(RuntimeException e, HttpStatus status, WebRequest request, HttpServletResponse response) {
-		String message = e.getMessage() != null ? e.getMessage() : status.getReasonPhrase();
+		if (response != null && !response.isCommitted()) {
+			String message = e.getMessage() != null ? e.getMessage() : status.getReasonPhrase();
 
-		response.reset();
+			try {
+				response.reset();
+			} catch (IllegalStateException ex) {
+				LOGGER.debug(ex.getMessage(), ex);
+				return null;
+			}
 
-		switch (status) {
-			case INTERNAL_SERVER_ERROR -> message = handleInternalServerError(e, request);
-			case SERVICE_UNAVAILABLE, UNSUPPORTED_MEDIA_TYPE -> LOGGER.error(e.getMessage(), e);
-			default -> LOGGER.debug(e.getMessage(), e);
+			switch (status) {
+				case INTERNAL_SERVER_ERROR -> message = handleInternalServerError(e, request);
+				case SERVICE_UNAVAILABLE, UNSUPPORTED_MEDIA_TYPE -> LOGGER.error(e.getMessage(), e);
+				default -> LOGGER.debug(e.getMessage(), e);
+			}
+
+			return new ResponseEntity<>(getResponseDto(message, status), getHeaders(request), status);
 		}
 
-		return new ResponseEntity<>(getResponseDto(message, status), getHeaders(request), status);
+		return null;
 	}
 
 	/**

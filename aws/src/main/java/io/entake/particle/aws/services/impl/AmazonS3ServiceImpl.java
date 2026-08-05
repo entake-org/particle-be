@@ -49,7 +49,7 @@ public class AmazonS3ServiceImpl implements AmazonS3Service {
                     .bucket(bucket)
                     .key(documentKey)
                     .contentType(file.getContentType())
-                    .acl(isPublic ? BucketCannedACL.PUBLIC_READ.toString() : null)
+                    .acl(isPublic ? ObjectCannedACL.PUBLIC_READ : null)
                     .build();
 
             s3Client.putObject(putObjectRequest, RequestBody.fromBytes(file.getBytes()));
